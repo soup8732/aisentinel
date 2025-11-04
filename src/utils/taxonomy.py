@@ -6,12 +6,12 @@ from typing import Dict, List, Mapping
 
 
 class Category(str, Enum):
-    """High-level AI tool categories."""
+    """High-level AI tool types."""
 
-    CODING = "coding_assistants"
-    GENERATIVE = "generative_image_video"
-    NLP = "nlp_llms"
-    VISION = "vision_other"
+    TEXT = "text"
+    VIDEO_PIC = "video_pic"
+    AUDIO = "audio"
+    CODE = "code"
 
 
 class Source(str, Enum):
@@ -34,26 +34,34 @@ class Tool:
 
 
 TOOLS: List[Tool] = [
-    # Coding
-    Tool("VibeCoding", Category.CODING),
-    Tool("Tabby", Category.CODING),
-    Tool("GitHub Copilot", Category.CODING),
-    Tool("CodeWhisperer", Category.CODING),
-    # Generative
-    Tool("Stability AI", Category.GENERATIVE),
-    Tool("RunwayML", Category.GENERATIVE),
-    Tool("Midjourney", Category.GENERATIVE),
-    Tool("DALL-E", Category.GENERATIVE),
-    Tool("DreamStudio", Category.GENERATIVE),
-    # NLP/LLMs
-    Tool("DeepSeek", Category.NLP),
-    Tool("Llama", Category.NLP),
-    Tool("Hugging Face Transformers", Category.NLP),
-    Tool("GPT-NeoX", Category.NLP),
-    # Vision/Other
-    Tool("MediaPipe", Category.VISION),
-    Tool("OpenCV", Category.VISION),
-    Tool("Segment Anything", Category.VISION),
+    # Code
+    Tool("VibeCoding", Category.CODE),
+    Tool("Tabby", Category.CODE),
+    Tool("GitHub Copilot", Category.CODE),
+    Tool("CodeWhisperer", Category.CODE),
+    Tool("Bolt", Category.CODE),  # builder/agent for code
+    Tool("Loveable", Category.CODE),  # lovable.dev code assistant
+    # Video/Pic (generative and vision)
+    Tool("Stability AI", Category.VIDEO_PIC),
+    Tool("RunwayML", Category.VIDEO_PIC),
+    Tool("Midjourney", Category.VIDEO_PIC),
+    Tool("DALL-E", Category.VIDEO_PIC),
+    Tool("DreamStudio", Category.VIDEO_PIC),
+    Tool("Segment Anything", Category.VIDEO_PIC),
+    Tool("OpenCV", Category.VIDEO_PIC),
+    # Text (LLMs/NLP)
+    Tool("DeepSeek", Category.TEXT),
+    Tool("Llama", Category.TEXT),
+    Tool("Hugging Face Transformers", Category.TEXT),
+    Tool("GPT-NeoX", Category.TEXT),
+    Tool("ChatGPT", Category.TEXT),
+    Tool("Claude", Category.TEXT),
+    Tool("Gemini", Category.TEXT),
+    Tool("Mistral", Category.TEXT),
+    Tool("Humain", Category.TEXT),  # general agents/chat
+    # Audio (examples)
+    Tool("Whisper", Category.AUDIO),
+    Tool("ElevenLabs", Category.AUDIO),
 ]
 
 
