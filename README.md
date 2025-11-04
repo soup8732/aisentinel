@@ -1,13 +1,25 @@
 # AISentinel
 
-AISentinel provides a modular pipeline to collect public sentiment about AI tools across domains (coding assistants, generative media, NLP/LLMs, vision/other), analyze it, and visualize trends.
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.50+-red.svg)](https://streamlit.io/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-## Categories & Tools (tracked examples)
+AISentinel provides a modular pipeline to collect public sentiment about AI tools across domains, analyze it, and visualize trends through an interactive dashboard.
 
-- Coding Assistants: VibeCoding, Tabby, GitHub Copilot, CodeWhisperer
-- Generative Image/Video: Stability AI, RunwayML, Midjourney, DALL-E, DreamStudio
-- NLP/LLMs: DeepSeek, Llama, Hugging Face Transformers, GPT-NeoX
-- Vision/Other: MediaPipe, OpenCV, Segment Anything
+## 🎯 Features
+
+- **Multi-source data collection**: Twitter/X, Reddit, Hacker News
+- **Advanced sentiment analysis**: Transformers + TensorFlow models with confidence scoring
+- **Interactive dashboard**: User-friendly ratings, rankings, and tool comparisons
+- **Real-time insights**: Track sentiment trends, privacy concerns, and user perception
+- **Easy deployment**: Streamlit Cloud ready with one-click deployment
+
+## 📊 Categories & Tools
+
+- **Text & Chat**: ChatGPT, Claude, Gemini, DeepSeek, Mistral, Humain
+- **Coding & Dev**: VibeCoding, Tabby, GitHub Copilot, CodeWhisperer, Bolt, Loveable
+- **Images & Video**: Stability AI, RunwayML, Midjourney, DALL-E, DreamStudio, OpenCV
+- **Audio & Speech**: Whisper, ElevenLabs
 
 ## Data Sources
 
@@ -71,28 +83,121 @@ tests/
 
 ## Getting Started
 
-1. Create and activate a virtual environment (Python 3.11+ recommended).
-2. Install dependencies:
-   - Runtime: `pip install -r requirements/base.txt`
-   - Dev: `pip install -r requirements/dev.txt`
-3. Configure environment variables:
-   - Copy `.env.example` to `.env` and fill in values.
-4. (Optional) Verify configuration loading:
+### Local Setup
+
+1. **Clone the repository:**
    ```bash
-   python -c "from src.utils.config import load_config; print(load_config())"
+   git clone https://github.com/yourusername/aisentinel.git
+   cd aisentinel
    ```
-5. Run the demo dashboard:
+
+2. **Create and activate a virtual environment** (Python 3.11+ recommended):
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install --upgrade pip
+   pip install -r requirements/dev.txt
+   ```
+
+4. **Configure environment variables:**
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your API keys (Twitter Bearer Token, Reddit credentials, etc.)
+   ```
+
+5. **Run the dashboard:**
    ```bash
    streamlit run src/dashboard/app.py
    ```
+   Open http://localhost:8501 in your browser.
 
-## Why This Project?
+### Deploy to Streamlit Cloud
 
-- Demonstrates awareness across AI ecosystems and sentiment analysis
-- Combines data engineering, NLP, and visualization
-- Easy to extend with more tools/sources/models
-- Great for portfolios and interactive demos
+1. **Fork this repository** on GitHub
+2. **Go to [Streamlit Cloud](https://streamlit.io/cloud)**
+3. **Click "New app"** and select your fork
+4. **Set app details:**
+   - Main file path: `src/dashboard/app.py`
+   - Python version: 3.11
+5. **Add secrets** (in Streamlit Cloud dashboard):
+   - `TWITTER_BEARER_TOKEN`: Your Twitter API bearer token
+   - `REDDIT_CLIENT_ID`: Your Reddit client ID (optional)
+   - `REDDIT_CLIENT_SECRET`: Your Reddit client secret (optional)
+6. **Deploy!** Your app will be live at `https://your-app-name.streamlit.app`
 
-## License
+### Collect Data
 
-MIT
+To collect real data from Twitter/Reddit/Hacker News:
+
+```bash
+# Test Twitter connection
+python scripts/test_twitter.py
+
+# Collect Twitter data for dashboard
+python scripts/collect_twitter.py
+```
+
+The dashboard will automatically load data from `data/processed/sentiment.csv`.
+
+## 🚀 Live Demo
+
+Once deployed to Streamlit Cloud, add your live demo link here:
+```
+https://your-app-name.streamlit.app
+```
+
+## 📸 Screenshots
+
+Add screenshots of your dashboard here to showcase the UI:
+- Dashboard home page
+- Tool details view
+- Category filtering
+
+## 🛠️ Tech Stack
+
+- **Python 3.11+**: Core language
+- **Streamlit**: Interactive dashboard framework
+- **Transformers**: Hugging Face models for sentiment analysis
+- **TensorFlow**: Optional deep learning backend
+- **Pandas**: Data manipulation and analysis
+- **Plotly**: Interactive visualizations
+- **PRAW**: Reddit API integration
+- **Requests**: HTTP client for APIs
+
+## 🧪 Testing
+
+Run the test suite:
+```bash
+pytest
+```
+
+Check code quality:
+```bash
+ruff check .
+black --check .
+mypy src
+```
+
+## 🤝 Contributing
+
+Contributions welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Built with [Streamlit](https://streamlit.io/)
+- Uses [Hugging Face Transformers](https://huggingface.co/transformers/)
+- Data sources: Twitter API, Reddit API, Hacker News Algolia API

@@ -201,18 +201,20 @@ def rankings_table(df: pd.DataFrame, top_n: int) -> None:
 def render_tool_card(row: pd.Series, key_scope: str, idx: int) -> None:
     icon = CATEGORY_ICON.get(str(row["category"]), "✨")
     emoji = row.get("mood", "")
+    tool_name = str(row["tool"])
     with st.container(border=True):
-        st.markdown(f"{icon}  **{row['tool']}**  {emoji}")
+        st.markdown(f"{icon}  **{tool_name}**  {emoji}")
         st.progress(int(row["overall_10"]) / 10.0, text=f"Overall {int(row['overall_10'])}/10")
         st.progress(int(row["perception_10"]) / 10.0, text=f"User Perception {int(row['perception_10'])}/10")
         st.progress(int(row["privacy_10"]) / 10.0, text=f"Privacy & Security {int(row['privacy_10'])}/10")
         cols = st.columns(2)
         with cols[0]:
-            if st.button("View details", key=f"view-{key_scope}-{idx}-{row['tool']}"):
-                st.session_state["selected_tool"] = str(row["tool"])
-                st.success("Details selected below.")
+            if st.button("View details", key=f"view-{key_scope}-{idx}-{tool_name}"):
+                st.session_state["selected_tool"] = tool_name
+                st.session_state["show_details"] = True
+                st.rerun()
         with cols[1]:
-            url = TOOL_LINKS.get(str(row["tool"]))
+            url = TOOL_LINKS.get(tool_name)
             if url:
                 st.link_button("Open site", url)
 
@@ -246,34 +248,72 @@ def category_tabs(df: pd.DataFrame, top_n: int, view_mode: str) -> None:
 
 def details_panel(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> None:
     tools = sorted(df_ratings["tool"].unique().tolist())
-    default_tool = st.session_state.get("selected_tool") if st.session_state.get("selected_tool") in tools else None
-    tool = st.selectbox("Select a tool", tools, index=(tools.index(default_tool) if default_tool else 0))
+    # Get selected tool from session state or default to first
+    selected = st.session_state.get("selected_tool")
+    default_idx = tools.index(selected) if selected and selected in tools else 0
+    tool = st.selectbox("Select a tool", tools, index=default_idx, key="tool_select")
+    
+    # Update session state if user manually changes selection
+    if tool != st.session_state.get("selected_tool"):
+        st.session_state["selected_tool"] = tool
+    
+    # Show banner if tool was just selected
+    if st.session_state.get("show_details", False):
+        st.info(f"Showing details for **{tool}**. Click 'View details' on any card to switch tools.")
+        st.session_state["show_details"] = False
+    
     item = df_ratings[df_ratings["tool"] == tool].iloc[0]
-
+    icon = CATEGORY_ICON.get(str(item["category"]), "✨")
+    
+    st.markdown(f"### {icon} {tool}")
+    st.divider()
+    
+    # Metrics row
     c1, c2, c3 = st.columns(3)
-    c1.metric("Overall", f"{int(item['overall_10'])}/10")
-    c2.metric("User Perception", f"{int(item['perception_10'])}/10")
-    c3.metric("Privacy & Security", f"{int(item['privacy_10'])}/10")
-
+    c1.metric("Overall Score", f"{int(item['overall_10'])}/10", help="Overall sentiment score")
+    c2.metric("User Perception", f"{int(item['perception_10'])}/10", help="How users feel about ease of use, reliability, features")
+    c3.metric("Privacy & Security", f"{int(item['privacy_10'])}/10", help="Based on mentions of data handling, security, privacy concerns")
+    
+    # Progress bars
+    st.markdown("#### Scores")
+    st.progress(int(item["overall_10"]) / 10.0, text=f"Overall: {int(item['overall_10'])}/10")
+    st.progress(int(item["perception_10"]) / 10.0, text=f"User Perception: {int(item['perception_10'])}/10")
+    st.progress(int(item["privacy_10"]) / 10.0, text=f"Privacy & Security: {int(item['privacy_10'])}/10")
+    
+    # External link
     url = TOOL_LINKS.get(tool)
     if url:
         st.link_button("Visit tool website", url)
-
+    
+    st.divider()
     st.markdown("#### What people are saying")
     sample = df_raw[df_raw["tool"] == tool].copy()
     if sample.empty:
         st.write("No recent mentions available in the current dataset.")
     else:
-        pos = sample[sample["label"] == "positive"]["text"].astype(str).head(3).tolist()
-        neg = sample[sample["label"] == "negative"]["text"].astype(str).head(3).tolist()
+        pos = sample[sample["label"] == "positive"]["text"].astype(str).head(5).tolist()
+        neg = sample[sample["label"] == "negative"]["text"].astype(str).head(5).tolist()
+        neu = sample[sample["label"] == "neutral"]["text"].astype(str).head(3).tolist()
+        
         col_a, col_b = st.columns(2)
         with col_a:
             st.markdown("**Highlights (Positive)**")
-            for t in pos or ["No positive highlights yet."]:
-                st.write(f"• {t}")
+            if pos:
+                for t in pos:
+                    st.write(f"• {t}")
+            else:
+                st.write("No positive highlights yet.")
         with col_b:
             st.markdown("**Concerns (Negative)**")
-            for t in neg or ["No concerns mentioned yet."]:
+            if neg:
+                for t in neg:
+                    st.write(f"• {t}")
+            else:
+                st.write("No concerns mentioned yet.")
+        
+        if neu:
+            st.markdown("**Neutral mentions**")
+            for t in neu:
                 st.write(f"• {t}")
 
 
