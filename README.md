@@ -33,10 +33,15 @@ AISentinel collects public sentiment from Twitter, Reddit, and Hacker News about
 
 ## Tracked Tools
 
-**Text & Chat**: ChatGPT, Claude, Gemini, DeepSeek, Mistral, Humain  
-**Coding & Dev**: VibeCoding, Tabby, GitHub Copilot, CodeWhisperer, Bolt, Loveable  
-**Images & Video**: Stability AI, RunwayML, Midjourney, DALL-E, DreamStudio, OpenCV  
-**Audio & Speech**: Whisper, ElevenLabs
+**Text & Chat**: ChatGPT, Claude, Gemini, DeepSeek, Mistral, Jasper, Copy.ai, Writesonic, Lindy
+
+**Coding & Dev**: GitHub Copilot, Amazon Q Developer, CodeWhisperer, Tabnine, Tabby, Replit Ghostwriter, Bolt, Loveable, JetBrains AI Assistant, Cursor, Codeium, Polycoder, AskCodi, Sourcery, Greta
+
+**Images & Video**: Stability AI, RunwayML, Midjourney, DALL-E, DreamStudio, OpenCV, Adobe Firefly, Pika Labs, Luma Dream Machine, Vidu
+
+**Audio & Speech**: Whisper, ElevenLabs, Murf AI, PlayHT, Speechify, Synthesys, Animaker, Kits AI, WellSaid Labs, Hume, DupDub
+
+*This list is continuously updated as new AI tools emerge.*
 
 ## Quick Start
 

@@ -34,34 +34,55 @@ class Tool:
 
 
 TOOLS: List[Tool] = [
-    # Code
-    Tool("VibeCoding", Category.CODE),
-    Tool("Tabby", Category.CODE),
+    # Text & Chat
+    Tool("ChatGPT", Category.TEXT),
+    Tool("Claude", Category.TEXT),
+    Tool("Gemini", Category.TEXT),
+    Tool("DeepSeek", Category.TEXT),
+    Tool("Mistral", Category.TEXT),
+    Tool("Jasper", Category.TEXT),
+    Tool("Copy.ai", Category.TEXT),
+    Tool("Writesonic", Category.TEXT),
+    Tool("Lindy", Category.TEXT),
+    # Coding & Dev
     Tool("GitHub Copilot", Category.CODE),
+    Tool("Amazon Q Developer", Category.CODE),
     Tool("CodeWhisperer", Category.CODE),
-    Tool("Bolt", Category.CODE),  # builder/agent for code
-    Tool("Loveable", Category.CODE),  # lovable.dev code assistant
-    # Video/Pic (generative and vision)
+    Tool("Tabnine", Category.CODE),
+    Tool("Tabby", Category.CODE),
+    Tool("Replit Ghostwriter", Category.CODE),
+    Tool("Bolt", Category.CODE),
+    Tool("Loveable", Category.CODE),
+    Tool("JetBrains AI Assistant", Category.CODE),
+    Tool("Cursor", Category.CODE),
+    Tool("Codeium", Category.CODE),
+    Tool("Polycoder", Category.CODE),
+    Tool("AskCodi", Category.CODE),
+    Tool("Sourcery", Category.CODE),
+    Tool("Greta", Category.CODE),
+    # Image & Video
     Tool("Stability AI", Category.VIDEO_PIC),
     Tool("RunwayML", Category.VIDEO_PIC),
     Tool("Midjourney", Category.VIDEO_PIC),
     Tool("DALL-E", Category.VIDEO_PIC),
     Tool("DreamStudio", Category.VIDEO_PIC),
-    Tool("Segment Anything", Category.VIDEO_PIC),
     Tool("OpenCV", Category.VIDEO_PIC),
-    # Text (LLMs/NLP)
-    Tool("DeepSeek", Category.TEXT),
-    Tool("Llama", Category.TEXT),
-    Tool("Hugging Face Transformers", Category.TEXT),
-    Tool("GPT-NeoX", Category.TEXT),
-    Tool("ChatGPT", Category.TEXT),
-    Tool("Claude", Category.TEXT),
-    Tool("Gemini", Category.TEXT),
-    Tool("Mistral", Category.TEXT),
-    Tool("Humain", Category.TEXT),  # general agents/chat
-    # Audio (examples)
+    Tool("Adobe Firefly", Category.VIDEO_PIC),
+    Tool("Pika Labs", Category.VIDEO_PIC),
+    Tool("Luma Dream Machine", Category.VIDEO_PIC),
+    Tool("Vidu", Category.VIDEO_PIC),
+    # Audio & Speech
     Tool("Whisper", Category.AUDIO),
     Tool("ElevenLabs", Category.AUDIO),
+    Tool("Murf AI", Category.AUDIO),
+    Tool("PlayHT", Category.AUDIO),
+    Tool("Speechify", Category.AUDIO),
+    Tool("Synthesys", Category.AUDIO),
+    Tool("Animaker", Category.AUDIO),
+    Tool("Kits AI", Category.AUDIO),
+    Tool("WellSaid Labs", Category.AUDIO),
+    Tool("Hume", Category.AUDIO),
+    Tool("DupDub", Category.AUDIO),
 ]
 
 
