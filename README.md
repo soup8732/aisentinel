@@ -4,15 +4,33 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.50+-red.svg)](https://streamlit.io/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
+> **Interactive AI Tool Sentiment Dashboard** - Track public sentiment, ratings, and user perception for AI tools like ChatGPT, Claude, Gemini, and more.
+
+## 🚀 Try It Now!
+
+**👉 [Launch Live Dashboard](https://your-app-name.streamlit.app)** *(Replace with your Streamlit Cloud URL after deployment)*
+
+Or run locally:
+```bash
+streamlit run src/dashboard/app.py
+```
+
 AISentinel provides a modular pipeline to collect public sentiment about AI tools across domains, analyze it, and visualize trends through an interactive dashboard.
 
-## 🎯 Features
+## 🎯 What This Tool Does
 
-- **Multi-source data collection**: Twitter/X, Reddit, Hacker News
-- **Advanced sentiment analysis**: Transformers + TensorFlow models with confidence scoring
-- **Interactive dashboard**: User-friendly ratings, rankings, and tool comparisons
-- **Real-time insights**: Track sentiment trends, privacy concerns, and user perception
-- **Easy deployment**: Streamlit Cloud ready with one-click deployment
+AISentinel is a **fully functional, interactive dashboard** that:
+
+1. **Collects** public sentiment from Twitter, Reddit, and Hacker News about AI tools
+2. **Analyzes** sentiment using advanced NLP models (Transformers + TensorFlow)
+3. **Displays** results in an easy-to-understand dashboard with:
+   - 📊 Tool rankings and ratings (0-10 scale)
+   - 📈 Sentiment trends over time
+   - 🎯 Category-based filtering (Text & Chat, Coding & Dev, Images & Video, Audio)
+   - 🔍 Detailed tool pages with user quotes
+   - 🔒 Privacy & security scoring
+
+**Try it now** - Click the link above to see the live dashboard!
 
 ## 📊 Categories & Tools
 
@@ -143,12 +161,18 @@ python scripts/collect_twitter.py
 
 The dashboard will automatically load data from `data/processed/sentiment.csv`.
 
-## 🚀 Live Demo
+## 🌐 Live Demo
 
-Once deployed to Streamlit Cloud, add your live demo link here:
-```
-https://your-app-name.streamlit.app
-```
+**👉 [Click here to view the live dashboard](https://your-app-name.streamlit.app)**
+
+*Once you deploy to Streamlit Cloud, replace the URL above with your actual deployment URL.*
+
+The dashboard features:
+- ✅ Real-time sentiment analysis
+- ✅ Tool rankings and comparisons
+- ✅ Category-based filtering
+- ✅ Interactive tool details pages
+- ✅ Privacy & security scoring
 
 ## 📸 Screenshots
 
