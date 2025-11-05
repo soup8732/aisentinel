@@ -77,7 +77,7 @@ TOOL_LINKS: Dict[str, str] = {
 }
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, ttl=3600)  # Cache for 1 hour, clear on restart
 def load_dataset() -> pd.DataFrame:
     processed = Path("data/processed/sentiment.csv")
     if processed.exists():
@@ -118,7 +118,7 @@ def sentiment_emoji(x: float) -> str:
     return EMOJI_MIX
 
 
-@st.cache_data(show_spinner=False)
+@st.cache_data(show_spinner=False, ttl=3600)  # Cache for 1 hour
 def build_ratings(df: pd.DataFrame) -> pd.DataFrame:
     temp = df.copy()
     temp["is_pos"] = (temp["score"] > 0.2).astype(int)
@@ -169,6 +169,15 @@ def search_and_filter(df_ratings: pd.DataFrame) -> Tuple[pd.DataFrame, int, str]
     return out, top_n, view_mode
 
 
+def sidebar_tools() -> None:
+    """Sidebar utilities for cache clearing and navigation."""
+    with st.sidebar:
+        if st.button("🔄 Clear Cache & Refresh", use_container_width=True):
+            st.cache_data.clear()
+            st.rerun()
+        st.caption("Click to refresh data and see new tools")
+
+
 def rankings_table(df: pd.DataFrame, top_n: int) -> None:
     if df.empty:
         st.info("No results.")
@@ -209,10 +218,11 @@ def render_tool_card(row: pd.Series, key_scope: str, idx: int) -> None:
         st.progress(int(row["privacy_10"]) / 10.0, text=f"Privacy & Security {int(row['privacy_10'])}/10")
         cols = st.columns(2)
         with cols[0]:
-            if st.button("View details", key=f"view-{key_scope}-{idx}-{tool_name}"):
+            if st.button("View details", key=f"view-{key_scope}-{idx}-{tool_name}", use_container_width=True):
                 st.session_state["selected_tool"] = tool_name
                 st.session_state["show_details"] = True
-                st.rerun()
+                st.session_state["goto_details"] = True
+                st.success(f"📋 Showing details for **{tool_name}**. Switch to 'Details' tab above.")
         with cols[1]:
             url = TOOL_LINKS.get(tool_name)
             if url:
@@ -248,6 +258,14 @@ def category_tabs(df: pd.DataFrame, top_n: int, view_mode: str) -> None:
 
 def details_panel(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> None:
     tools = sorted(df_ratings["tool"].unique().tolist())
+    
+    # Show banner if tool was just selected from card
+    if st.session_state.get("goto_details", False):
+        selected = st.session_state.get("selected_tool")
+        if selected and selected in tools:
+            st.success(f"📋 **Showing details for {selected}** - Selected from card view")
+            st.session_state["goto_details"] = False
+    
     # Get selected tool from session state or default to first
     selected = st.session_state.get("selected_tool")
     default_idx = tools.index(selected) if selected and selected in tools else 0
@@ -256,11 +274,6 @@ def details_panel(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> None:
     # Update session state if user manually changes selection
     if tool != st.session_state.get("selected_tool"):
         st.session_state["selected_tool"] = tool
-    
-    # Show banner if tool was just selected
-    if st.session_state.get("show_details", False):
-        st.info(f"Showing details for **{tool}**. Click 'View details' on any card to switch tools.")
-        st.session_state["show_details"] = False
     
     item = df_ratings[df_ratings["tool"] == tool].iloc[0]
     icon = CATEGORY_ICON.get(str(item["category"]), "✨")
@@ -316,6 +329,9 @@ def details_panel(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> None:
             for t in neu:
                 st.write(f"• {t}")
 
+
+# Sidebar tools (cache clear, etc.)
+sidebar_tools()
 
 # Load data and compute ratings
 _df = load_dataset()
