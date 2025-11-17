@@ -25,13 +25,37 @@ AISentinel collects public sentiment from Twitter, Reddit, and Hacker News about
 
 ## Features
 
+### 📊 Interactive Dashboard
 - **Tool Rankings**: See which AI tools have the best sentiment scores (0-10 scale)
-- **Category Filtering**: Browse by Text & Chat, Coding & Dev, Images & Video, Audio
-- **Detailed Insights**: Click any tool to see user quotes, sentiment breakdown, and privacy scores
-- **Real-time Data**: Collects from Twitter, Reddit, and Hacker News
-- **Custom ML Models**: Train your own TensorFlow sentiment models on real data
-- **Advanced Analysis**: LSTM + Attention mechanism with 85-90% accuracy
+- **Dual View Modes**: Toggle between Table view (data-dense) and Card view (visual)
+- **Quick Jump Search**: Autocomplete dropdown to instantly find any tool
+- **Advanced Filtering**: Category multi-select, date range filtering, and text search
+- **Trend Indicators**: See at-a-glance if tools are improving (📈), declining (📉), or stable (➡)
+- **CSV Export**: Download rankings and raw data for external analysis
+
+### 📈 Analytics & Visualization
+- **Sentiment Trends**: Interactive Plotly charts showing sentiment over time
+- **Distribution Analysis**: Pie charts breaking down positive/neutral/negative mentions
+- **Category Performance**: Compare sentiment scores across different AI tool categories
+- **Tool Comparison**: Side-by-side comparison of any two tools with delta metrics
+
+### 🔍 Detailed Insights
+- **User Quotes**: Real positive, negative, and neutral mentions from users
+- **Privacy Scores**: Dedicated privacy & security sentiment analysis
+- **Perception Ratings**: User perception separate from general sentiment
+- **Mention Tracking**: See total mentions and sentiment breakdown for each tool
+
+### 🤖 Custom ML Models
+- **TensorFlow Models**: Train your own sentiment models on real data
+- **Advanced Architectures**: LSTM + Attention mechanism with 85-90% accuracy
 - **Production-Ready**: Model versioning, checkpointing, and comprehensive evaluation
+- **Real-time Inference**: Use custom models in production dashboard
+
+### 📡 Data Collection
+- **Multi-source**: Collects from Twitter, Reddit, and Hacker News
+- **Automated Cleaning**: Built-in text preprocessing and deduplication
+- **No Scraping**: All data from official APIs (legal and ethical)
+- **Instant Start**: Hacker News collector works with zero setup
 
 ## Tracked Tools
 
@@ -120,6 +144,7 @@ aisentinel/
 │   ├── data_collection/        # Data collectors
 │   │   └── prepare_training_data.py
 │   ├── dashboard/              # Streamlit dashboard
+│   │   └── app.py              # Main dashboard (5 tabs, Plotly charts)
 │   └── utils/                  # Config, taxonomy
 ├── models/                      # Trained models & checkpoints
 ├── data/                        # Training & processed data
@@ -130,8 +155,20 @@ aisentinel/
 │   └── test_model.py
 ├── tests/                       # Unit tests
 └── docs/                        # Documentation
-    └── ML_PIPELINE.md          # ML docs
+    ├── ML_PIPELINE.md          # ML architecture & training guide
+    ├── API_SETUP.md            # API credentials setup guide
+    ├── CODEBASE_AUDIT.md       # Full codebase audit report
+    ├── FRONTEND_REVIEW.md      # Dashboard code review (A- grade)
+    └── FRONTEND_FEATURES.md    # Complete feature guide (v2.0)
 ```
+
+## Documentation
+
+- **[Frontend Features Guide](docs/FRONTEND_FEATURES.md)** - Complete guide to all dashboard features (v2.0)
+- **[ML Pipeline Guide](docs/ML_PIPELINE.md)** - Model architectures, training, and evaluation
+- **[API Setup Guide](docs/API_SETUP.md)** - Detailed API credentials setup (Twitter, Reddit, HN)
+- **[Codebase Audit](docs/CODEBASE_AUDIT.md)** - What works, what needs setup, quick start options
+- **[Frontend Review](docs/FRONTEND_REVIEW.md)** - Detailed code review and technical analysis
 
 ## Contributing
 
