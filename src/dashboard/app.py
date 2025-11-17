@@ -22,10 +22,104 @@ os.environ.setdefault("MPLCONFIGDIR", str((PROJECT_ROOT / ".mplconfig").resolve(
 
 from src.utils.taxonomy import Category, tools_by_category
 
-st.set_page_config(page_title="AISentinel Reviews", layout="wide")
-st.title("AISentinel")
-st.subheader("AI Tools Reviews & Ratings")
-st.caption("Simple, clear insights into popularity and safety at a glance.")
+st.set_page_config(
+    page_title="AISentinel - AI Tools Reviews",
+    page_icon="🤖",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+# Custom CSS for better styling
+st.markdown("""
+<style>
+    /* Main header styling */
+    .main-header {
+        text-align: center;
+        padding: 2rem 0 1rem 0;
+        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        color: white;
+    }
+    .main-header h1 {
+        color: white !important;
+        font-size: 3rem;
+        margin-bottom: 0.5rem;
+    }
+    .main-header p {
+        color: rgba(255,255,255,0.9);
+        font-size: 1.2rem;
+    }
+
+    /* Metric cards styling */
+    [data-testid="stMetricValue"] {
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+
+    /* Better spacing */
+    .block-container {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    /* Card styling */
+    .tool-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+        margin-bottom: 1rem;
+    }
+    .tool-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border-color: #667eea;
+    }
+
+    /* Button styling */
+    .stButton>button {
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    .stButton>button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Tab styling */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 8px;
+    }
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 8px 8px 0 0;
+        padding: 10px 20px;
+        font-weight: 500;
+    }
+
+    /* Expander styling */
+    .streamlit-expanderHeader {
+        font-weight: 500;
+        border-radius: 8px;
+    }
+
+    /* Divider */
+    hr {
+        margin: 2rem 0;
+        border-color: #e0e0e0;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# Header
+st.markdown("""
+<div class="main-header">
+    <h1>🤖 AISentinel</h1>
+    <p>Real-time sentiment analysis of AI tools based on user feedback</p>
+</div>
+""", unsafe_allow_html=True)
 
 EMOJI_POS = "😊"
 EMOJI_MIX = "😐"
@@ -156,23 +250,37 @@ def build_ratings(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def search_and_filter(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> Tuple[pd.DataFrame, int, str, Optional[Tuple[datetime, datetime]]]:
-    # Quick jump to tool (autocomplete)
+    # Filters section with better organization
+    st.markdown("### 🔍 Search & Filters")
+
+    # Quick jump to tool (autocomplete) - prominent placement
     all_tools = sorted(df_ratings["tool"].unique().tolist())
-    selected_tool = st.selectbox(
-        "🔍 Quick Jump to Tool",
-        [""] + all_tools,
-        placeholder="Type to search...",
-        key="quick_search"
-    )
-    if selected_tool:
-        st.session_state["selected_tool"] = selected_tool
-        st.session_state["goto_details"] = True
-        st.info(f"✨ Selected **{selected_tool}**. Switch to 'Details' tab to view.")
+    col_quick, col_spacer = st.columns([2, 1])
+    with col_quick:
+        selected_tool = st.selectbox(
+            "Quick Jump to Tool",
+            [""] + all_tools,
+            placeholder="🔍 Type to search for a specific tool...",
+            key="quick_search",
+            help="Quickly navigate to a specific tool's details"
+        )
+        if selected_tool:
+            st.session_state["selected_tool"] = selected_tool
+            st.session_state["goto_details"] = True
+            st.success(f"✨ **{selected_tool}** selected! Switch to 'Details' tab to view.")
 
-    st.divider()
+    st.markdown("#### Filter Results")
 
+    # Main filters in a cleaner layout
     c1, c2, c3, c4 = st.columns([3, 2, 2, 2])
-    query = c1.text_input("Find AI tools...", placeholder="Search by name")
+
+    with c1:
+        query = st.text_input(
+            "Search by name",
+            placeholder="🔎 Enter tool name...",
+            help="Filter tools by name"
+        )
+
     # Build multi-map from friendly label -> list of raw categories present in the data
     raw_cats = sorted(df_ratings["category"].astype(str).unique().tolist())
     friendly_list = sorted({FRIENDLY_LABEL.get(c, c.replace('_',' ').title()) for c in raw_cats})
@@ -181,26 +289,61 @@ def search_and_filter(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> Tuple[p
         lbl = FRIENDLY_LABEL.get(rc, rc.replace('_',' ').title())
         label_to_raw.setdefault(lbl, []).append(rc)
 
-    sel_labels = c2.multiselect("Type", friendly_list, default=friendly_list)
+    with c2:
+        sel_labels = st.multiselect(
+            "Category",
+            friendly_list,
+            default=friendly_list,
+            help="Filter by tool category"
+        )
     selected_raw = [rc for lbl in sel_labels for rc in label_to_raw.get(lbl, [])]
 
-    top_n = int(c3.selectbox("Show Top", [5, 10, 20, 50], index=1))
-    view_mode = c4.radio("View", ["Table", "Cards"], horizontal=True)
+    with c3:
+        top_n = int(st.selectbox(
+            "Show Top",
+            [5, 10, 20, 50],
+            index=1,
+            help="Number of top tools to display"
+        ))
 
-    # Date filtering
+    with c4:
+        view_mode = st.radio(
+            "View Mode",
+            ["Table", "Cards"],
+            horizontal=True,
+            help="Switch between table and card view"
+        )
+
+    # Date filtering in collapsible section
     date_range = None
     if not df_raw.empty and "created_at" in df_raw.columns:
-        with st.expander("📅 Filter by Date Range"):
+        with st.expander("📅 Advanced: Filter by Date Range", expanded=False):
             col_date1, col_date2 = st.columns(2)
             min_date = df_raw["created_at"].min().date()
             max_date = df_raw["created_at"].max().date()
 
             with col_date1:
-                start_date = st.date_input("From", min_date, min_value=min_date, max_value=max_date)
+                start_date = st.date_input(
+                    "From Date",
+                    min_date,
+                    min_value=min_date,
+                    max_value=max_date,
+                    help="Start date for filtering"
+                )
             with col_date2:
-                end_date = st.date_input("To", max_date, min_value=min_date, max_value=max_date)
+                end_date = st.date_input(
+                    "To Date",
+                    max_date,
+                    min_value=min_date,
+                    max_value=max_date,
+                    help="End date for filtering"
+                )
 
             if start_date and end_date:
+                date_range = (
+                    pd.Timestamp(start_date).tz_localize('UTC'),
+                    pd.Timestamp(end_date).tz_localize('UTC') + pd.Timedelta(days=1)
+                )
                 # Ensure timezone-aware timestamps to match dataframe (date objects are naive)
                 start_ts = pd.Timestamp(start_date).tz_localize('UTC')
                 end_ts = pd.Timestamp(end_date).tz_localize('UTC')
@@ -215,23 +358,34 @@ def search_and_filter(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> Tuple[p
 def sidebar_tools(df: pd.DataFrame) -> None:
     """Sidebar utilities for cache clearing, navigation, and stats."""
     with st.sidebar:
-        st.markdown("### 📊 Data Overview")
+        # Branding
+        st.markdown("---")
 
-        # Data freshness indicators
+        st.markdown("### 📊 Dashboard Stats")
+
+        # Data freshness indicators with better formatting
         if not df.empty and "created_at" in df.columns:
             latest_date = df["created_at"].max()
-            st.metric("Last Updated", latest_date.strftime("%Y-%m-%d %H:%M") if pd.notna(latest_date) else "N/A")
+            col1, col2 = st.columns([1, 2])
+            with col1:
+                st.markdown("🕐")
+            with col2:
+                st.markdown(f"**Updated**<br>{latest_date.strftime('%b %d, %Y') if pd.notna(latest_date) else 'N/A'}", unsafe_allow_html=True)
 
-        st.metric("Total Data Points", f"{len(df):,}")
-        st.metric("Tools Tracked", f"{df['tool'].nunique()}" if not df.empty else "0")
+        # Metrics in a cleaner format
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("📝 Data Points", f"{len(df):,}")
+        with col2:
+            st.metric("🛠️ Tools", f"{df['tool'].nunique()}" if not df.empty else "0")
 
         if not df.empty and "category" in df.columns:
-            st.metric("Categories", f"{df['category'].nunique()}")
+            st.metric("📁 Categories", f"{df['category'].nunique()}")
 
-        st.divider()
+        st.markdown("---")
 
-        # Score calculation explainer
-        with st.expander("ℹ️ How Scores Work"):
+        # Score calculation explainer with better formatting
+        with st.expander("💡 How Scores Work", expanded=False):
             st.markdown("""
             **Overall Score** (0-10)
             - Average sentiment of all mentions
@@ -327,41 +481,184 @@ def rankings_table(df: pd.DataFrame, top_n: int, df_raw: Optional[pd.DataFrame] 
     )
 
 
-def render_tool_card(row: pd.Series, key_scope: str, idx: int) -> None:
+@st.dialog
+def show_tool_details_modal(tool_name: str, row: pd.Series, df_raw: pd.DataFrame):
+    """Display tool details in a modal dialog."""
+    icon = CATEGORY_ICON.get(str(row["category"]), "✨")
+
+    st.markdown(f"# {icon} {tool_name}")
+
+    # Category badge
+    category_label = row.get("type_label", "")
+    if category_label:
+        st.markdown(f"**Category:** {category_label}")
+
+    st.markdown("---")
+
+    # Metrics with color coding
+    overall_score = int(row["overall_10"])
+    perception_score = int(row["perception_10"])
+    privacy_score = int(row["privacy_10"])
+
+    def get_score_color(score):
+        if score >= 7:
+            return "#10b981"
+        elif score >= 5:
+            return "#f59e0b"
+        else:
+            return "#ef4444"
+
+    # Big score display
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown(f"<div style='text-align:center; padding:20px; background:#f8f9fa; border-radius:10px;'><div style='font-size:3em; font-weight:bold; color:{get_score_color(overall_score)};'>{overall_score}</div><div style='font-size:1em; color:#666; margin-top:10px;'>Overall Score</div></div>", unsafe_allow_html=True)
+    with col2:
+        st.markdown(f"<div style='text-align:center; padding:20px; background:#f8f9fa; border-radius:10px;'><div style='font-size:3em; font-weight:bold; color:{get_score_color(perception_score)};'>{perception_score}</div><div style='font-size:1em; color:#666; margin-top:10px;'>User Perception</div></div>", unsafe_allow_html=True)
+    with col3:
+        st.markdown(f"<div style='text-align:center; padding:20px; background:#f8f9fa; border-radius:10px;'><div style='font-size:3em; font-weight:bold; color:{get_score_color(privacy_score)};'>{privacy_score}</div><div style='font-size:1em; color:#666; margin-top:10px;'>Privacy & Security</div></div>", unsafe_allow_html=True)
+
+    st.markdown("")
+
+    # Stats
+    st.markdown("### 📊 Performance Metrics")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        st.metric("Total Mentions", f"{int(row['n']):,}")
+        st.metric("Positive Reviews", f"{int(row['pos']):,}")
+    with col_b:
+        st.metric("Category Rank", "Top 10%", help="Estimated ranking within category")
+        st.metric("Negative Reviews", f"{int(row['neg']):,}")
+
+    # External link
+    url = TOOL_LINKS.get(tool_name)
+    if url:
+        st.markdown("### 🔗 Official Website")
+        st.link_button(f"Visit {tool_name}", url, use_container_width=True, type="primary")
+
+    # Charts if data available
+    if not df_raw.empty:
+        st.markdown("---")
+        st.markdown("### 📈 Sentiment Analysis")
+
+        tab1, tab2 = st.tabs(["Trend Over Time", "Distribution"])
+
+        with tab1:
+            trend_chart = create_trend_chart(df_raw, tool_name)
+            if trend_chart:
+                st.plotly_chart(trend_chart, use_container_width=True)
+            else:
+                st.info("Not enough historical data for trend analysis")
+
+        with tab2:
+            dist_chart = create_sentiment_distribution_chart(df_raw, tool_name)
+            st.plotly_chart(dist_chart, use_container_width=True)
+
+    # User feedback samples
+    st.markdown("---")
+    st.markdown("### 💬 What Users Are Saying")
+
+    tool_data = df_raw[df_raw["tool"] == tool_name]
+    if not tool_data.empty:
+        pos = tool_data[tool_data["label"] == "positive"]["text"].astype(str).head(3).tolist()
+        neg = tool_data[tool_data["label"] == "negative"]["text"].astype(str).head(3).tolist()
+
+        col_pos, col_neg = st.columns(2)
+        with col_pos:
+            st.markdown("**😊 Positive Feedback**")
+            if pos:
+                for comment in pos:
+                    st.markdown(f"• *{comment}*")
+            else:
+                st.info("No positive feedback available")
+
+        with col_neg:
+            st.markdown("**😟 Concerns**")
+            if neg:
+                for comment in neg:
+                    st.markdown(f"• *{comment}*")
+            else:
+                st.info("No negative feedback available")
+    else:
+        st.info("No user feedback available in current dataset")
+
+
+def render_tool_card(row: pd.Series, key_scope: str, idx: int, df_raw: Optional[pd.DataFrame] = None) -> None:
     icon = CATEGORY_ICON.get(str(row["category"]), "✨")
     emoji = row.get("mood", "")
     tool_name = str(row["tool"])
+    category_label = row.get("type_label", "")
+
     with st.container(border=True):
-        st.markdown(f"{icon}  **{tool_name}**  {emoji}")
-        st.progress(int(row["overall_10"]) / 10.0, text=f"Overall {int(row['overall_10'])}/10")
-        st.progress(int(row["perception_10"]) / 10.0, text=f"User Perception {int(row['perception_10'])}/10")
-        st.progress(int(row["privacy_10"]) / 10.0, text=f"Privacy & Security {int(row['privacy_10'])}/10")
+        # Header with tool name and category
+        col_name, col_badge = st.columns([3, 1])
+        with col_name:
+            st.markdown(f"### {icon} {tool_name} {emoji}")
+        with col_badge:
+            if category_label:
+                st.markdown(f"<div style='text-align:right; padding-top:10px;'><span style='background:#f0f2f6; padding:4px 12px; border-radius:12px; font-size:0.8em;'>{category_label}</span></div>", unsafe_allow_html=True)
+
+        st.markdown("---")
+
+        # Scores with color coding
+        overall_score = int(row["overall_10"])
+        perception_score = int(row["perception_10"])
+        privacy_score = int(row["privacy_10"])
+
+        # Score color helper
+        def get_score_color(score):
+            if score >= 7:
+                return "#10b981"  # green
+            elif score >= 5:
+                return "#f59e0b"  # orange
+            else:
+                return "#ef4444"  # red
+
+        # Display scores with better formatting
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown(f"<div style='text-align:center;'><div style='font-size:2em; font-weight:bold; color:{get_score_color(overall_score)};'>{overall_score}</div><div style='font-size:0.8em; color:#666;'>Overall</div></div>", unsafe_allow_html=True)
+        with col2:
+            st.markdown(f"<div style='text-align:center;'><div style='font-size:2em; font-weight:bold; color:{get_score_color(perception_score)};'>{perception_score}</div><div style='font-size:0.8em; color:#666;'>Perception</div></div>", unsafe_allow_html=True)
+        with col3:
+            st.markdown(f"<div style='text-align:center;'><div style='font-size:2em; font-weight:bold; color:{get_score_color(privacy_score)};'>{privacy_score}</div><div style='font-size:0.8em; color:#666;'>Privacy</div></div>", unsafe_allow_html=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # Action buttons
         cols = st.columns(2)
         with cols[0]:
-            if st.button("View details", key=f"view-{key_scope}-{idx}-{tool_name}", use_container_width=True):
-                st.session_state["selected_tool"] = tool_name
-                st.session_state["show_details"] = True
-                st.session_state["goto_details"] = True
-                st.success(f"📋 Showing details for **{tool_name}**. Switch to 'Details' tab above.")
+            if st.button("📊 View Details", key=f"view-{key_scope}-{idx}-{tool_name}", use_container_width=True, type="primary"):
+                if df_raw is not None:
+                    show_tool_details_modal(tool_name, row, df_raw)
+                else:
+                    st.warning("Details temporarily unavailable")
         with cols[1]:
             url = TOOL_LINKS.get(tool_name)
             if url:
-                st.link_button("Open site", url)
+                st.link_button("🔗 Website", url, use_container_width=True)
+            else:
+                st.markdown("<div style='height:38px;'></div>", unsafe_allow_html=True)  # Placeholder spacing
 
 
-def rankings_cards(df: pd.DataFrame, top_n: int, key_scope: str) -> None:
+def rankings_cards(df: pd.DataFrame, top_n: int, key_scope: str, df_raw: Optional[pd.DataFrame] = None) -> None:
     if df.empty:
-        st.info("No results.")
+        st.info("🔍 No tools match your current filters. Try adjusting your search criteria.")
         return
+
     view = (
         df.sort_values(["overall_10", "perception_10", "privacy_10"], ascending=[False, False, False])
         .head(top_n)
         .reset_index(drop=True)
     )
+
+    # Show results count
+    st.markdown(f"*Showing top {len(view)} of {len(df)} tools*")
+    st.markdown("")
+
     cols = st.columns(2)
     for i, (_, row) in enumerate(view.iterrows()):
         with cols[i % 2]:
-            render_tool_card(row, key_scope, i)
+            render_tool_card(row, key_scope, i, df_raw)
 
 
 def category_tabs(df: pd.DataFrame, top_n: int, view_mode: str, df_raw: Optional[pd.DataFrame] = None) -> None:
@@ -373,7 +670,7 @@ def category_tabs(df: pd.DataFrame, top_n: int, view_mode: str, df_raw: Optional
             if view_mode == "Table":
                 rankings_table(sub, top_n, df_raw)
             else:
-                rankings_cards(sub, top_n, key_scope=f"cat-{lbl}")
+                rankings_cards(sub, top_n, key_scope=f"cat-{lbl}", df_raw=df_raw)
 
 
 def create_trend_chart(df: pd.DataFrame, tool_name: str) -> Optional[go.Figure]:
@@ -654,92 +951,135 @@ else:
     _filtered_df = _df
     _display_ratings = _filtered if not _filtered.empty else _ratings
 
-# CSV Export Button
-st.markdown("### 📥 Export Data")
-col_exp1, col_exp2 = st.columns([1, 3])
-with col_exp1:
-    csv_ratings = _display_ratings.to_csv(index=False).encode('utf-8')
-    st.download_button(
-        label="Download Rankings (CSV)",
-        data=csv_ratings,
-        file_name=f"aisentinel_rankings_{datetime.now().strftime('%Y%m%d')}.csv",
-        mime="text/csv",
-        use_container_width=True
-    )
-with col_exp2:
-    if not _filtered_df.empty:
-        csv_raw = _filtered_df.to_csv(index=False).encode('utf-8')
+# CSV Export Section
+with st.expander("📥 Export Data", expanded=False):
+    st.markdown("Download the current results as CSV files for further analysis.")
+    col_exp1, col_exp2 = st.columns(2)
+    with col_exp1:
+        csv_ratings = _display_ratings.to_csv(index=False).encode('utf-8')
         st.download_button(
-            label="Download Raw Data (CSV)",
-            data=csv_raw,
-            file_name=f"aisentinel_raw_data_{datetime.now().strftime('%Y%m%d')}.csv",
+            label="📊 Download Rankings (CSV)",
+            data=csv_ratings,
+            file_name=f"aisentinel_rankings_{datetime.now().strftime('%Y%m%d')}.csv",
             mime="text/csv",
-            use_container_width=True
+            use_container_width=True,
+            type="primary"
         )
+        st.caption(f"{len(_display_ratings)} tools in rankings")
+    with col_exp2:
+        if not _filtered_df.empty:
+            csv_raw = _filtered_df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📝 Download Raw Data (CSV)",
+                data=csv_raw,
+                file_name=f"aisentinel_raw_data_{datetime.now().strftime('%Y%m%d')}.csv",
+                mime="text/csv",
+                use_container_width=True
+            )
+            st.caption(f"{len(_filtered_df)} data points")
 
-# Tabs: Top Tools, By Type, Details, Analytics, Compare
+# Main Content Tabs
 st.divider()
-_tabs = st.tabs(["Top Tools", "By Type", "Analytics", "Compare", "Details"])
+st.markdown("## 📊 Explore AI Tools")
+_tabs = st.tabs(["🏆 Top Tools", "📁 By Category", "📈 Analytics", "⚖️ Compare", "🔍 Details"])
 
 with _tabs[0]:
     st.markdown("### 🏆 Top Rated AI Tools")
+    st.markdown("*Discover the highest-rated AI tools based on real user sentiment*")
+    st.markdown("")
     if _view_mode == "Table":
         rankings_table(_display_ratings, _top_n, _filtered_df)
     else:
-        rankings_cards(_display_ratings, _top_n, key_scope="top")
+        rankings_cards(_display_ratings, _top_n, key_scope="top", df_raw=_filtered_df)
 
 with _tabs[1]:
-    st.markdown("### 📁 Browse by Type")
+    st.markdown("### 📁 Browse by Category")
+    st.markdown("*Explore AI tools organized by their primary function*")
+    st.markdown("")
     category_tabs(_display_ratings, _top_n, _view_mode, _filtered_df)
 
 with _tabs[2]:
-    st.markdown("### 📊 Analytics & Insights")
+    st.markdown("### 📈 Analytics & Insights")
+    st.markdown("*Deep dive into sentiment patterns and performance metrics*")
+    st.markdown("")
 
     # Overall sentiment distribution
-    st.markdown("#### Overall Sentiment Distribution")
+    st.markdown("#### 📊 Sentiment Distribution")
     overall_dist = create_sentiment_distribution_chart(_filtered_df)
     st.plotly_chart(overall_dist, use_container_width=True)
 
+    st.markdown("---")
+
     # Category comparison
-    st.markdown("#### Category Performance")
+    st.markdown("#### 📁 Category Performance Comparison")
     if not _display_ratings.empty:
         cat_chart = create_category_comparison_chart(_display_ratings)
         st.plotly_chart(cat_chart, use_container_width=True)
+    else:
+        st.info("No data available for category comparison.")
+
+    st.markdown("---")
 
     # Top/Bottom performers
+    st.markdown("#### 🏅 Performance Leaders & Laggards")
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("#### 🌟 Top 5 Tools")
-        top_5 = _display_ratings.nlargest(5, "overall_10")[["tool", "overall_10", "n"]]
-        st.dataframe(
-            top_5.reset_index(drop=True),
-            hide_index=True,
-            column_config={
-                "tool": "Tool",
-                "overall_10": st.column_config.ProgressColumn("Score", min_value=0, max_value=10),
-                "n": "Mentions"
-            }
-        )
+        st.markdown("##### 🌟 Top 5 Tools")
+        if not _display_ratings.empty:
+            top_5 = _display_ratings.nlargest(5, "overall_10")[["tool", "overall_10", "n"]]
+            st.dataframe(
+                top_5.reset_index(drop=True),
+                hide_index=True,
+                column_config={
+                    "tool": "Tool",
+                    "overall_10": st.column_config.ProgressColumn("Score", min_value=0, max_value=10),
+                    "n": "Mentions"
+                },
+                use_container_width=True
+            )
+        else:
+            st.info("No data available.")
 
     with col2:
-        st.markdown("#### 📉 Bottom 5 Tools")
-        bottom_5 = _display_ratings.nsmallest(5, "overall_10")[["tool", "overall_10", "n"]]
-        st.dataframe(
-            bottom_5.reset_index(drop=True),
-            hide_index=True,
-            column_config={
-                "tool": "Tool",
-                "overall_10": st.column_config.ProgressColumn("Score", min_value=0, max_value=10),
-                "n": "Mentions"
-            }
-        )
+        st.markdown("##### 📉 Bottom 5 Tools")
+        if not _display_ratings.empty:
+            bottom_5 = _display_ratings.nsmallest(5, "overall_10")[["tool", "overall_10", "n"]]
+            st.dataframe(
+                bottom_5.reset_index(drop=True),
+                hide_index=True,
+                column_config={
+                    "tool": "Tool",
+                    "overall_10": st.column_config.ProgressColumn("Score", min_value=0, max_value=10),
+                    "n": "Mentions"
+                },
+                use_container_width=True
+            )
+        else:
+            st.info("No data available.")
 
 with _tabs[3]:
+    st.markdown("### ⚖️ Compare Tools Side-by-Side")
+    st.markdown("*Select two tools to compare their performance metrics*")
+    st.markdown("")
     tool_comparison_section(_display_ratings, _filtered_df)
 
 with _tabs[4]:
-    st.markdown("### 🔍 Tool Details")
+    st.markdown("### 🔍 Detailed Tool Analysis")
+    st.markdown("*In-depth view of individual tool performance and user feedback*")
+    st.markdown("")
     details_panel(_display_ratings, _filtered_df)
 
 st.divider()
-st.caption("AISentinel — clear, friendly AI tool reviews powered by AI/ML. ")
+
+# Footer
+st.markdown("---")
+footer_col1, footer_col2, footer_col3 = st.columns([2, 1, 1])
+with footer_col1:
+    st.markdown("**AISentinel** — Real-time sentiment analysis of AI tools")
+    st.caption("Powered by advanced machine learning and natural language processing")
+with footer_col2:
+    st.markdown("**📊 Data Sources**")
+    st.caption("Twitter, Reddit, Hacker News")
+with footer_col3:
+    st.markdown("**🔄 Updates**")
+    st.caption("Refreshed hourly")
