@@ -198,6 +198,9 @@ def load_dataset() -> pd.DataFrame:
         df = pd.DataFrame(rows)
     if not pd.api.types.is_datetime64_any_dtype(df["created_at"]):
         df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
+    # Ensure timezone-aware (UTC) for consistent date filtering
+    if df["created_at"].dt.tz is None:
+        df["created_at"] = df["created_at"].dt.tz_localize("UTC")
     return df.dropna(subset=["created_at", "tool", "category"]).copy()
 
 
@@ -333,6 +336,7 @@ def search_and_filter(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> Tuple[p
                 )
 
             if start_date and end_date:
+                # Make timestamps timezone-aware to match DataFrame
                 date_range = (
                     pd.Timestamp(start_date).tz_localize('UTC'),
                     pd.Timestamp(end_date).tz_localize('UTC') + pd.Timedelta(days=1)
