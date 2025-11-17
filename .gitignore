@@ -91,5 +91,26 @@ logs/
 /data/processed/
 /data/samples/
 
+# Model artifacts (can be large)
+/models/run_*/
+models/**/checkpoints/
+models/**/logs/
+*.keras
+*.h5
+*.pb
+*.pkl
+saved_model/
+
+# TensorBoard logs
+**/logs/events.out.tfevents.*
+
+# Matplotlib cache
+.mplconfig/
+
+# Training outputs
+training_history.png
+confusion_matrix.png
+model_architecture.png
+
 # Local files
 *.local
