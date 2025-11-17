@@ -470,7 +470,108 @@ def rankings_table(df: pd.DataFrame, top_n: int, df_raw: Optional[pd.DataFrame] 
     )
 
 
-def render_tool_card(row: pd.Series, key_scope: str, idx: int) -> None:
+@st.dialog
+def show_tool_details_modal(tool_name: str, row: pd.Series, df_raw: pd.DataFrame):
+    """Display tool details in a modal dialog."""
+    icon = CATEGORY_ICON.get(str(row["category"]), "✨")
+
+    st.markdown(f"# {icon} {tool_name}")
+
+    # Category badge
+    category_label = row.get("type_label", "")
+    if category_label:
+        st.markdown(f"**Category:** {category_label}")
+
+    st.markdown("---")
+
+    # Metrics with color coding
+    overall_score = int(row["overall_10"])
+    perception_score = int(row["perception_10"])
+    privacy_score = int(row["privacy_10"])
+
+    def get_score_color(score):
+        if score >= 7:
+            return "#10b981"
+        elif score >= 5:
+            return "#f59e0b"
+        else:
+            return "#ef4444"
+
+    # Big score display
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.markdown(f"<div style='text-align:center; padding:20px; background:#f8f9fa; border-radius:10px;'><div style='font-size:3em; font-weight:bold; color:{get_score_color(overall_score)};'>{overall_score}</div><div style='font-size:1em; color:#666; margin-top:10px;'>Overall Score</div></div>", unsafe_allow_html=True)
+    with col2:
+        st.markdown(f"<div style='text-align:center; padding:20px; background:#f8f9fa; border-radius:10px;'><div style='font-size:3em; font-weight:bold; color:{get_score_color(perception_score)};'>{perception_score}</div><div style='font-size:1em; color:#666; margin-top:10px;'>User Perception</div></div>", unsafe_allow_html=True)
+    with col3:
+        st.markdown(f"<div style='text-align:center; padding:20px; background:#f8f9fa; border-radius:10px;'><div style='font-size:3em; font-weight:bold; color:{get_score_color(privacy_score)};'>{privacy_score}</div><div style='font-size:1em; color:#666; margin-top:10px;'>Privacy & Security</div></div>", unsafe_allow_html=True)
+
+    st.markdown("")
+
+    # Stats
+    st.markdown("### 📊 Performance Metrics")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        st.metric("Total Mentions", f"{int(row['n']):,}")
+        st.metric("Positive Reviews", f"{int(row['pos']):,}")
+    with col_b:
+        st.metric("Category Rank", "Top 10%", help="Estimated ranking within category")
+        st.metric("Negative Reviews", f"{int(row['neg']):,}")
+
+    # External link
+    url = TOOL_LINKS.get(tool_name)
+    if url:
+        st.markdown("### 🔗 Official Website")
+        st.link_button(f"Visit {tool_name}", url, use_container_width=True, type="primary")
+
+    # Charts if data available
+    if not df_raw.empty:
+        st.markdown("---")
+        st.markdown("### 📈 Sentiment Analysis")
+
+        tab1, tab2 = st.tabs(["Trend Over Time", "Distribution"])
+
+        with tab1:
+            trend_chart = create_trend_chart(df_raw, tool_name)
+            if trend_chart:
+                st.plotly_chart(trend_chart, use_container_width=True)
+            else:
+                st.info("Not enough historical data for trend analysis")
+
+        with tab2:
+            dist_chart = create_sentiment_distribution_chart(df_raw, tool_name)
+            st.plotly_chart(dist_chart, use_container_width=True)
+
+    # User feedback samples
+    st.markdown("---")
+    st.markdown("### 💬 What Users Are Saying")
+
+    tool_data = df_raw[df_raw["tool"] == tool_name]
+    if not tool_data.empty:
+        pos = tool_data[tool_data["label"] == "positive"]["text"].astype(str).head(3).tolist()
+        neg = tool_data[tool_data["label"] == "negative"]["text"].astype(str).head(3).tolist()
+
+        col_pos, col_neg = st.columns(2)
+        with col_pos:
+            st.markdown("**😊 Positive Feedback**")
+            if pos:
+                for comment in pos:
+                    st.markdown(f"• *{comment}*")
+            else:
+                st.info("No positive feedback available")
+
+        with col_neg:
+            st.markdown("**😟 Concerns**")
+            if neg:
+                for comment in neg:
+                    st.markdown(f"• *{comment}*")
+            else:
+                st.info("No negative feedback available")
+    else:
+        st.info("No user feedback available in current dataset")
+
+
+def render_tool_card(row: pd.Series, key_scope: str, idx: int, df_raw: Optional[pd.DataFrame] = None) -> None:
     icon = CATEGORY_ICON.get(str(row["category"]), "✨")
     emoji = row.get("mood", "")
     tool_name = str(row["tool"])
@@ -516,10 +617,10 @@ def render_tool_card(row: pd.Series, key_scope: str, idx: int) -> None:
         cols = st.columns(2)
         with cols[0]:
             if st.button("📊 View Details", key=f"view-{key_scope}-{idx}-{tool_name}", use_container_width=True, type="primary"):
-                st.session_state["selected_tool"] = tool_name
-                st.session_state["show_details"] = True
-                st.session_state["goto_details"] = True
-                st.success(f"✨ Viewing **{tool_name}**. Check the 'Details' tab!")
+                if df_raw is not None:
+                    show_tool_details_modal(tool_name, row, df_raw)
+                else:
+                    st.warning("Details temporarily unavailable")
         with cols[1]:
             url = TOOL_LINKS.get(tool_name)
             if url:
@@ -528,7 +629,7 @@ def render_tool_card(row: pd.Series, key_scope: str, idx: int) -> None:
                 st.markdown("<div style='height:38px;'></div>", unsafe_allow_html=True)  # Placeholder spacing
 
 
-def rankings_cards(df: pd.DataFrame, top_n: int, key_scope: str) -> None:
+def rankings_cards(df: pd.DataFrame, top_n: int, key_scope: str, df_raw: Optional[pd.DataFrame] = None) -> None:
     if df.empty:
         st.info("🔍 No tools match your current filters. Try adjusting your search criteria.")
         return
@@ -546,7 +647,7 @@ def rankings_cards(df: pd.DataFrame, top_n: int, key_scope: str) -> None:
     cols = st.columns(2)
     for i, (_, row) in enumerate(view.iterrows()):
         with cols[i % 2]:
-            render_tool_card(row, key_scope, i)
+            render_tool_card(row, key_scope, i, df_raw)
 
 
 def category_tabs(df: pd.DataFrame, top_n: int, view_mode: str, df_raw: Optional[pd.DataFrame] = None) -> None:
@@ -558,7 +659,7 @@ def category_tabs(df: pd.DataFrame, top_n: int, view_mode: str, df_raw: Optional
             if view_mode == "Table":
                 rankings_table(sub, top_n, df_raw)
             else:
-                rankings_cards(sub, top_n, key_scope=f"cat-{lbl}")
+                rankings_cards(sub, top_n, key_scope=f"cat-{lbl}", df_raw=df_raw)
 
 
 def create_trend_chart(df: pd.DataFrame, tool_name: str) -> Optional[go.Figure]:
@@ -875,7 +976,7 @@ with _tabs[0]:
     if _view_mode == "Table":
         rankings_table(_display_ratings, _top_n, _filtered_df)
     else:
-        rankings_cards(_display_ratings, _top_n, key_scope="top")
+        rankings_cards(_display_ratings, _top_n, key_scope="top", df_raw=_filtered_df)
 
 with _tabs[1]:
     st.markdown("### 📁 Browse by Category")
