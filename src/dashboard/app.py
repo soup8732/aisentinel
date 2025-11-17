@@ -470,7 +470,7 @@ def rankings_table(df: pd.DataFrame, top_n: int, df_raw: Optional[pd.DataFrame] 
     )
 
 
-@st.dialog
+@st.dialog("Tool Details")
 def show_tool_details_modal(tool_name: str, row: pd.Series, df_raw: pd.DataFrame):
     """Display tool details in a modal dialog."""
     icon = CATEGORY_ICON.get(str(row["category"]), "✨")
