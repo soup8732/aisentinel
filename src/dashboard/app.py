@@ -104,7 +104,14 @@ def load_dataset() -> pd.DataFrame:
         df = pd.DataFrame(rows)
     if not pd.api.types.is_datetime64_any_dtype(df["created_at"]):
         df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
-    return df.dropna(subset=["created_at", "tool", "category"]).copy()
+    # Normalize timezone: if timezone-aware, keep as UTC; if naive, make UTC-aware
+    df = df.dropna(subset=["created_at", "tool", "category"]).copy()
+    if not df.empty and "created_at" in df.columns:
+        if df["created_at"].dt.tz is not None:
+            df["created_at"] = df["created_at"].dt.tz_convert('UTC')
+        else:
+            df["created_at"] = df["created_at"].dt.tz_localize('UTC')
+    return df
 
 
 def score_to_010(x: float) -> int:
@@ -194,7 +201,10 @@ def search_and_filter(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> Tuple[p
                 end_date = st.date_input("To", max_date, min_value=min_date, max_value=max_date)
 
             if start_date and end_date:
-                date_range = (pd.Timestamp(start_date), pd.Timestamp(end_date))
+                # Ensure timezone-aware timestamps to match dataframe (date objects are naive)
+                start_ts = pd.Timestamp(start_date).tz_localize('UTC')
+                end_ts = pd.Timestamp(end_date).tz_localize('UTC')
+                date_range = (start_ts, end_ts)
 
     out = df_ratings[df_ratings["category"].isin(selected_raw)] if selected_raw else df_ratings
     if query.strip():
@@ -625,9 +635,12 @@ _filtered, _top_n, _view_mode, _date_range = search_and_filter(_ratings, _df)
 # Apply date filtering if specified
 _filtered_df = _df.copy()
 if _date_range and "created_at" in _df.columns:
+    # Ensure both sides of comparison are timezone-aware (date_range is already UTC from search_and_filter)
+    start_date = _date_range[0]
+    end_date = _date_range[1]
     _filtered_df = _df[
-        (_df["created_at"] >= _date_range[0]) &
-        (_df["created_at"] <= _date_range[1])
+        (_df["created_at"] >= start_date) &
+        (_df["created_at"] <= end_date)
     ]
     # Rebuild ratings with filtered data
     _filtered_ratings = build_ratings(_filtered_df)
