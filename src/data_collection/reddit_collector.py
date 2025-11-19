@@ -1,3 +1,30 @@
+"""
+Reddit data collector for AI tool sentiment analysis.
+
+This module collects posts and comments from Reddit that mention AI tools.
+It searches specified subreddits (default: MachineLearning, AI, OpenAI, DataScience)
+and extracts text data for sentiment analysis.
+
+Requirements:
+    - PRAW library (pip install praw)
+    - Reddit API credentials in .env file:
+        REDDIT_CLIENT_ID=your_client_id
+        REDDIT_CLIENT_SECRET=your_client_secret
+        REDDIT_USER_AGENT=aisentinel/0.1.0
+
+Setup: See docs/API_SETUP.md for detailed instructions.
+
+Usage:
+    from src.data_collection.reddit_collector import RedditCollector
+
+    collector = RedditCollector(limit=100)
+    items = list(collector.collect())
+
+    # Save to CSV
+    import pandas as pd
+    df = pd.DataFrame([item.as_dict() for item in items])
+    df.to_csv("data/raw/reddit_data.csv", index=False)
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass

@@ -1,5 +1,25 @@
 #!/usr/bin/env python3
-"""Generate sample sentiment data for dashboard demo."""
+"""
+Generate sample sentiment data for dashboard demo.
+
+This script creates realistic demo data for the AISentinel dashboard,
+allowing you to test all features without needing real API data.
+
+The generated data includes:
+- 200 sample mentions across 10 popular AI tools
+- Realistic sentiment distribution (positive-skewed for popular tools)
+- Date range spanning the last 30 days
+- Sample user text for each sentiment category
+
+Output: data/processed/sentiment.csv
+    This is the same file the dashboard loads automatically.
+
+Usage:
+    python scripts/generate_sample_data.py
+
+After running, launch the dashboard to see the data:
+    streamlit run src/dashboard/app.py
+"""
 import pandas as pd
 from datetime import datetime, timedelta
 import random
@@ -104,7 +124,8 @@ for _ in range(num_samples):
 df = pd.DataFrame(data)
 df = df.sort_values("created_at", ascending=False)
 
-output_file = "data/processed/sentiment_results.csv"
+# Save to the file that the dashboard expects
+output_file = "data/processed/sentiment.csv"
 df.to_csv(output_file, index=False)
 
 print(f"✅ Generated {len(df)} sample sentiment records")
@@ -113,3 +134,4 @@ print(f"\nTools included: {', '.join([t for t, _ in tools_data])}")
 print(f"\nSentiment distribution:")
 print(df["label"].value_counts())
 print(f"\nDate range: {df['created_at'].min()} to {df['created_at'].max()}")
+print(f"\n🚀 Run 'streamlit run src/dashboard/app.py' to view the dashboard")
