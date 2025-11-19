@@ -1,0 +1,501 @@
+created_at,tool,category,score,label,text
+2025-11-19 11:36:31,Loveable,code,0.6756,positive,Customer support for Loveable was really helpful too.
+2025-11-19 09:29:31,JetBrains AI Assistant,code,-0.1953,neutral,"JetBrains AI Assistant does what it says, nothing more."
+2025-11-19 08:48:31,Jasper,text,0.0762,neutral,Jasper works but the UI could be better.
+2025-11-19 08:47:31,Animaker,audio,0.2666,positive,The quality of Animaker output is consistently excellent.
+2025-11-19 06:53:31,Speechify,audio,0.0752,neutral,Speechify works but the UI could be better.
+2025-11-19 06:18:31,Copy.ai,text,0.821,positive,Really impressed with the results from Copy.ai!
+2025-11-19 05:20:31,Luma Dream Machine,video_pic,-0.6325,negative,"Disappointed with Luma Dream Machine, expected better quality."
+2025-11-19 02:58:31,DeepSeek,text,-0.1724,neutral,"Mixed feelings about DeepSeek, has pros and cons."
+2025-11-19 02:48:31,CodeWhisperer,code,0.6558,positive,Customer support for CodeWhisperer was really helpful too.
+2025-11-19 01:56:31,Whisper,audio,-0.0978,neutral,Still evaluating Whisper for our team.
+2025-11-19 01:23:31,Whisper,audio,0.3274,positive,Whisper helped me finish my project in half the time.
+2025-11-19 00:54:31,RunwayML,video_pic,0.7435,positive,The quality of RunwayML output is consistently excellent.
+2025-11-19 00:09:31,Murf AI,audio,-0.0085,neutral,"Murf AI does what it says, nothing more."
+2025-11-18 18:58:31,Loveable,code,-0.754,negative,Not worth the price. Loveable needs improvement.
+2025-11-18 16:43:31,ElevenLabs,audio,0.4386,positive,Really impressed with the results from ElevenLabs!
+2025-11-18 11:52:31,Midjourney,video_pic,0.9919,positive,Midjourney has been a game changer for my workflow.
+2025-11-18 11:45:31,DreamStudio,video_pic,-0.3252,negative,DreamStudio has too many limitations and bugs.
+2025-11-18 11:33:31,Greta,code,0.0099,neutral,Greta is fine but nothing spectacular.
+2025-11-18 11:08:31,ChatGPT,text,-0.591,negative,ChatGPT doesn't live up to the hype honestly.
+2025-11-18 07:06:31,Vidu,video_pic,-0.1021,neutral,"Trying out Vidu, seems okay so far."
+2025-11-18 06:53:31,Murf AI,audio,-0.8699,negative,The output from Murf AI is often inaccurate.
+2025-11-18 02:35:31,Claude,text,-0.0165,neutral,Claude works but the UI could be better.
+2025-11-18 02:11:31,Cursor,code,0.4534,positive,Cursor helped me finish my project in half the time.
+2025-11-18 01:15:31,Jasper,text,0.0216,neutral,Still evaluating Jasper for our team.
+2025-11-18 01:11:31,Writesonic,text,-0.1392,neutral,"Mixed feelings about Writesonic, has pros and cons."
+2025-11-18 01:00:31,DALL-E,video_pic,-0.0359,neutral,DALL-E works fine for basic tasks.
+2025-11-18 00:21:31,Midjourney,video_pic,0.7444,positive,The latest update to Midjourney made it even better.
+2025-11-17 23:53:31,RunwayML,video_pic,0.5383,positive,The quality of RunwayML output is consistently excellent.
+2025-11-17 23:42:31,Sourcery,code,0.0922,neutral,"Mixed feelings about Sourcery, has pros and cons."
+2025-11-17 22:15:31,Writesonic,text,0.3429,positive,The quality of Writesonic output is consistently excellent.
+2025-11-17 18:26:31,WellSaid Labs,audio,0.5934,positive,The latest update to WellSaid Labs made it even better.
+2025-11-17 16:25:31,AskCodi,code,0.098,neutral,The free tier of AskCodi is limited but usable.
+2025-11-17 15:55:31,Copy.ai,text,0.5351,positive,Love using Copy.ai for my daily tasks. Highly recommend!
+2025-11-17 14:32:31,Cursor,code,0.078,neutral,Still evaluating Cursor for our team.
+2025-11-17 12:59:31,Adobe Firefly,video_pic,0.6941,positive,Really impressed with the results from Adobe Firefly!
+2025-11-17 07:53:31,Amazon Q Developer,code,0.1978,neutral,"Switched from another tool to Amazon Q Developer, similar experience."
+2025-11-17 05:53:31,Adobe Firefly,video_pic,0.0556,neutral,Adobe Firefly works but the UI could be better.
+2025-11-17 05:39:31,Greta,code,0.1798,neutral,Greta works but the UI could be better.
+2025-11-17 05:13:31,Writesonic,text,0.1498,neutral,Writesonic works fine for basic tasks.
+2025-11-17 05:06:31,Amazon Q Developer,code,0.7933,positive,"Been using Amazon Q Developer for months now, absolutely worth it!"
+2025-11-17 02:33:31,Kits AI,audio,0.1472,neutral,"Using Kits AI occasionally, it's decent."
+2025-11-17 02:13:31,Sourcery,code,-0.7778,negative,Worried about data privacy with Sourcery.
+2025-11-17 01:35:31,Murf AI,audio,0.2763,positive,Really impressed with the results from Murf AI!
+2025-11-16 23:17:31,Gemini,text,0.5169,positive,"Been using Gemini for months now, absolutely worth it!"
+2025-11-16 22:13:31,Lindy,text,0.0354,neutral,Still evaluating Lindy for our team.
+2025-11-16 21:44:31,DALL-E,video_pic,0.8202,positive,DALL-E has been a game changer for my workflow.
+2025-11-16 20:10:31,Claude,text,0.8159,positive,"Just tried Claude and wow, the accuracy is impressive."
+2025-11-16 19:10:31,Vidu,video_pic,0.1313,neutral,"Switched from another tool to Vidu, similar experience."
+2025-11-16 17:27:31,Speechify,audio,0.0665,neutral,Speechify is fine but nothing spectacular.
+2025-11-16 16:52:31,WellSaid Labs,audio,-0.7689,negative,WellSaid Labs doesn't live up to the hype honestly.
+2025-11-16 12:37:31,Mistral,text,0.6567,positive,Love using Mistral for my daily tasks. Highly recommend!
+2025-11-16 12:13:31,Whisper,audio,0.549,positive,Whisper has been a game changer for my workflow.
+2025-11-16 10:52:31,Kits AI,audio,0.075,neutral,Still evaluating Kits AI for our team.
+2025-11-16 10:17:31,Writesonic,text,0.6565,positive,Writesonic helped me finish my project in half the time.
+2025-11-16 10:15:31,ElevenLabs,audio,-0.494,negative,"ElevenLabs keeps crashing, really unreliable."
+2025-11-16 08:22:31,Jasper,text,0.7892,positive,The quality of Jasper output is consistently excellent.
+2025-11-16 06:39:31,OpenCV,video_pic,-0.7283,negative,"Disappointed with OpenCV, expected better quality."
+2025-11-16 04:36:31,DeepSeek,text,0.6473,positive,Love using DeepSeek for my daily tasks. Highly recommend!
+2025-11-16 04:27:31,GitHub Copilot,code,0.6804,positive,"Just tried GitHub Copilot and wow, the accuracy is impressive."
+2025-11-16 00:32:31,Murf AI,audio,0.9203,positive,"Just tried Murf AI and wow, the accuracy is impressive."
+2025-11-16 00:31:31,Synthesys,audio,0.6578,positive,Customer support for Synthesys was really helpful too.
+2025-11-15 22:05:31,Greta,code,-0.0413,neutral,Greta is fine but nothing spectacular.
+2025-11-15 19:36:31,Cursor,code,0.9377,positive,Really impressed with the results from Cursor!
+2025-11-15 18:36:31,Cursor,code,0.0683,neutral,Cursor works fine for basic tasks.
+2025-11-15 18:11:31,Adobe Firefly,video_pic,0.7345,positive,Adobe Firefly helped me finish my project in half the time.
+2025-11-15 17:10:31,DreamStudio,video_pic,0.3507,positive,"Just tried DreamStudio and wow, the accuracy is impressive."
+2025-11-15 16:28:31,WellSaid Labs,audio,0.5783,positive,WellSaid Labs has been a game changer for my workflow.
+2025-11-15 14:30:31,ElevenLabs,audio,0.4063,positive,"Been using ElevenLabs for months now, absolutely worth it!"
+2025-11-15 14:04:31,Speechify,audio,0.427,positive,The latest update to Speechify made it even better.
+2025-11-15 12:42:31,Speechify,audio,-0.8717,negative,Speechify has too many limitations and bugs.
+2025-11-15 12:19:31,Stability AI,video_pic,-0.9035,negative,Stability AI doesn't live up to the hype honestly.
+2025-11-15 10:11:31,Luma Dream Machine,video_pic,0.5613,positive,The latest update to Luma Dream Machine made it even better.
+2025-11-15 08:27:31,Tabnine,code,0.1225,neutral,"Switched from another tool to Tabnine, similar experience."
+2025-11-15 08:03:31,Midjourney,video_pic,0.9884,positive,Midjourney has been a game changer for my workflow.
+2025-11-15 05:30:31,PlayHT,audio,0.2828,positive,The quality of PlayHT output is consistently excellent.
+2025-11-15 04:57:31,Replit Ghostwriter,code,0.9295,positive,The latest update to Replit Ghostwriter made it even better.
+2025-11-15 04:24:31,ElevenLabs,audio,0.0317,neutral,ElevenLabs works fine for basic tasks.
+2025-11-15 04:19:31,AskCodi,code,-0.1745,neutral,"Switched from another tool to AskCodi, similar experience."
+2025-11-15 00:45:31,PlayHT,audio,-0.7852,negative,"PlayHT keeps crashing, really unreliable."
+2025-11-15 00:09:31,Adobe Firefly,video_pic,0.1906,neutral,"Trying out Adobe Firefly, seems okay so far."
+2025-11-15 00:02:31,Jasper,text,0.3833,positive,Love using Jasper for my daily tasks. Highly recommend!
+2025-11-14 23:44:31,Speechify,audio,0.0925,neutral,"Speechify does what it says, nothing more."
+2025-11-14 22:14:31,Adobe Firefly,video_pic,0.1136,neutral,Adobe Firefly works but the UI could be better.
+2025-11-14 15:46:31,CodeWhisperer,code,0.4099,positive,The latest update to CodeWhisperer made it even better.
+2025-11-14 07:04:31,DreamStudio,video_pic,-0.3075,negative,Would not recommend DreamStudio in its current state.
+2025-11-14 02:04:31,JetBrains AI Assistant,code,-0.9341,negative,JetBrains AI Assistant doesn't live up to the hype honestly.
+2025-11-13 23:07:31,Tabnine,code,-0.1784,neutral,"Trying out Tabnine, seems okay so far."
+2025-11-13 22:04:31,Kits AI,audio,-0.6136,negative,Not worth the price. Kits AI needs improvement.
+2025-11-13 21:42:31,Gemini,text,0.1016,neutral,Gemini is fine but nothing spectacular.
+2025-11-13 21:39:31,DupDub,audio,-0.8532,negative,"Having issues with DupDub, very frustrating."
+2025-11-13 20:37:31,Murf AI,audio,0.6364,positive,"Been using Murf AI for months now, absolutely worth it!"
+2025-11-13 20:13:31,Gemini,text,-0.0138,neutral,"Trying out Gemini, seems okay so far."
+2025-11-13 20:05:31,Whisper,audio,-0.1872,neutral,Still evaluating Whisper for our team.
+2025-11-13 19:12:31,Codeium,code,-0.2734,negative,Codeium doesn't live up to the hype honestly.
+2025-11-13 18:55:31,AskCodi,code,0.6316,positive,AskCodi has been a game changer for my workflow.
+2025-11-13 12:33:31,Writesonic,text,0.6465,positive,"Just tried Writesonic and wow, the accuracy is impressive."
+2025-11-13 11:49:31,CodeWhisperer,code,-0.0003,neutral,Worried about data privacy with CodeWhisperer.
+2025-11-13 11:28:31,Writesonic,text,-0.0526,neutral,"Writesonic does what it says, nothing more."
+2025-11-13 10:57:31,DreamStudio,video_pic,-0.1059,neutral,DreamStudio works but the UI could be better.
+2025-11-13 07:38:31,Amazon Q Developer,code,0.322,positive,Amazon Q Developer helped me finish my project in half the time.
+2025-11-13 06:27:31,Copy.ai,text,0.593,positive,"Just tried Copy.ai and wow, the accuracy is impressive."
+2025-11-13 05:56:31,AskCodi,code,-0.3685,negative,"Having issues with AskCodi, very frustrating."
+2025-11-13 01:53:31,ChatGPT,text,0.5562,positive,The quality of ChatGPT output is consistently excellent.
+2025-11-12 20:06:31,WellSaid Labs,audio,0.1175,neutral,"Using WellSaid Labs occasionally, it's decent."
+2025-11-12 14:36:31,DALL-E,video_pic,-0.5351,negative,"Having issues with DALL-E, very frustrating."
+2025-11-12 14:21:31,Bolt,code,-0.2992,negative,Cancelled my Bolt subscription. Not impressed.
+2025-11-12 13:57:31,Amazon Q Developer,code,0.9178,positive,Love using Amazon Q Developer for my daily tasks. Highly recommend!
+2025-11-12 13:29:31,WellSaid Labs,audio,0.7177,positive,WellSaid Labs helped me finish my project in half the time.
+2025-11-12 10:41:31,Writesonic,text,0.125,neutral,Still evaluating Writesonic for our team.
+2025-11-12 08:44:31,Lindy,text,0.1693,neutral,Still evaluating Lindy for our team.
+2025-11-12 07:57:31,ElevenLabs,audio,0.1763,neutral,"Trying out ElevenLabs, seems okay so far."
+2025-11-12 07:05:31,Amazon Q Developer,code,-0.0722,neutral,"Using Amazon Q Developer occasionally, it's decent."
+2025-11-12 05:42:31,JetBrains AI Assistant,code,-0.5212,negative,Not worth the price. JetBrains AI Assistant needs improvement.
+2025-11-12 00:21:31,Sourcery,code,0.3739,positive,The quality of Sourcery output is consistently excellent.
+2025-11-11 23:18:31,Tabnine,code,0.1197,neutral,"Using Tabnine occasionally, it's decent."
+2025-11-11 22:31:31,Loveable,code,-0.3022,negative,Would not recommend Loveable in its current state.
+2025-11-11 22:22:31,JetBrains AI Assistant,code,0.6795,positive,The quality of JetBrains AI Assistant output is consistently excellent.
+2025-11-11 20:53:31,Loveable,code,0.8752,positive,The latest update to Loveable made it even better.
+2025-11-11 18:34:31,Gemini,text,0.3855,positive,Love using Gemini for my daily tasks. Highly recommend!
+2025-11-11 18:30:31,Claude,text,0.5487,positive,"Been using Claude for months now, absolutely worth it!"
+2025-11-11 17:19:31,DALL-E,video_pic,-0.4789,negative,DALL-E was slow and the results were mediocre.
+2025-11-11 13:19:31,Whisper,audio,0.5056,positive,The latest update to Whisper made it even better.
+2025-11-11 12:37:31,CodeWhisperer,code,0.7635,positive,Really impressed with the results from CodeWhisperer!
+2025-11-11 10:56:31,Lindy,text,0.6756,positive,"Been using Lindy for months now, absolutely worth it!"
+2025-11-11 06:43:31,Bolt,code,-0.8839,negative,"Having issues with Bolt, very frustrating."
+2025-11-11 05:37:31,DeepSeek,text,0.1373,neutral,Still evaluating DeepSeek for our team.
+2025-11-11 05:00:31,RunwayML,video_pic,-0.2728,neutral,Not sure if RunwayML is safe for confidential work.
+2025-11-11 03:43:31,Bolt,code,0.629,positive,Customer support for Bolt was really helpful too.
+2025-11-11 02:19:31,Replit Ghostwriter,code,0.2646,positive,The latest update to Replit Ghostwriter made it even better.
+2025-11-10 23:30:31,CodeWhisperer,code,-0.1439,neutral,"Trying out CodeWhisperer, seems okay so far."
+2025-11-10 22:29:31,Kits AI,audio,-0.369,negative,"Disappointed with Kits AI, expected better quality."
+2025-11-10 17:41:31,Amazon Q Developer,code,-0.1533,neutral,The free tier of Amazon Q Developer is limited but usable.
+2025-11-10 17:11:31,JetBrains AI Assistant,code,-0.8465,negative,JetBrains AI Assistant was slow and the results were mediocre.
+2025-11-10 16:33:31,Animaker,audio,0.5057,positive,Animaker helped me finish my project in half the time.
+2025-11-10 16:03:31,Hume,audio,0.3593,positive,Love using Hume for my daily tasks. Highly recommend!
+2025-11-10 15:57:31,Hume,audio,0.15,neutral,Still evaluating Hume for our team.
+2025-11-10 12:48:31,Tabby,code,0.3876,positive,The quality of Tabby output is consistently excellent.
+2025-11-10 10:50:31,Midjourney,video_pic,0.4141,positive,"Just tried Midjourney and wow, the accuracy is impressive."
+2025-11-10 09:29:31,Claude,text,0.0663,neutral,Claude works but the UI could be better.
+2025-11-10 08:29:31,Claude,text,0.2618,positive,"Just tried Claude and wow, the accuracy is impressive."
+2025-11-10 08:24:31,Tabnine,code,-0.0353,neutral,"Mixed feelings about Tabnine, has pros and cons."
+2025-11-10 07:53:31,RunwayML,video_pic,-0.6707,negative,Not worth the price. RunwayML needs improvement.
+2025-11-10 07:10:31,Speechify,audio,0.311,positive,The latest update to Speechify made it even better.
+2025-11-10 06:28:31,Luma Dream Machine,video_pic,0.6665,positive,Luma Dream Machine saves me hours every week. Great investment.
+2025-11-10 03:17:31,DreamStudio,video_pic,-0.92,negative,DreamStudio doesn't live up to the hype honestly.
+2025-11-09 22:54:31,WellSaid Labs,audio,0.4545,positive,WellSaid Labs saves me hours every week. Great investment.
+2025-11-09 22:29:31,WellSaid Labs,audio,0.0867,neutral,WellSaid Labs is fine but nothing spectacular.
+2025-11-09 22:14:31,Murf AI,audio,0.6179,positive,Really impressed with the results from Murf AI!
+2025-11-09 21:45:31,ElevenLabs,audio,-0.9232,negative,ElevenLabs was slow and the results were mediocre.
+2025-11-09 19:48:31,Codeium,code,-0.2822,neutral,Security issue reported with Codeium last week.
+2025-11-09 18:13:31,Synthesys,audio,-0.821,negative,Synthesys doesn't live up to the hype honestly.
+2025-11-09 17:14:31,JetBrains AI Assistant,code,0.1294,neutral,"Switched from another tool to JetBrains AI Assistant, similar experience."
+2025-11-09 16:31:31,ElevenLabs,audio,-0.0135,neutral,"Switched from another tool to ElevenLabs, similar experience."
+2025-11-09 15:26:31,Tabnine,code,-0.188,neutral,"Using Tabnine occasionally, it's decent."
+2025-11-09 14:06:31,PlayHT,audio,0.0879,neutral,PlayHT works but the UI could be better.
+2025-11-09 13:02:31,Animaker,audio,-0.4079,negative,Is Animaker safe to use with sensitive data?
+2025-11-09 11:38:31,DupDub,audio,-0.0419,neutral,The free tier of DupDub is limited but usable.
+2025-11-09 10:34:31,Tabby,code,0.0384,neutral,"Using Tabby occasionally, it's decent."
+2025-11-09 10:07:31,Jasper,text,0.0568,neutral,The free tier of Jasper is limited but usable.
+2025-11-09 06:15:31,Stability AI,video_pic,0.7674,positive,The latest update to Stability AI made it even better.
+2025-11-09 05:36:31,OpenCV,video_pic,0.7485,positive,OpenCV has been a game changer for my workflow.
+2025-11-09 04:01:31,Claude,text,-0.9201,negative,Cancelled my Claude subscription. Not impressed.
+2025-11-09 03:24:31,CodeWhisperer,code,-0.3954,negative,Cancelled my CodeWhisperer subscription. Not impressed.
+2025-11-09 02:27:31,Animaker,audio,0.1117,neutral,Still evaluating Animaker for our team.
+2025-11-09 00:53:31,GitHub Copilot,code,-0.7557,negative,Would not recommend GitHub Copilot in its current state.
+2025-11-08 22:32:31,Mistral,text,0.0744,neutral,Mistral is fine but nothing spectacular.
+2025-11-08 21:51:31,Polycoder,code,-0.1851,neutral,Still evaluating Polycoder for our team.
+2025-11-08 20:57:31,Bolt,code,0.0959,neutral,"Using Bolt occasionally, it's decent."
+2025-11-08 19:56:31,WellSaid Labs,audio,-0.8334,negative,The privacy policy of WellSaid Labs is concerning.
+2025-11-08 19:19:31,Vidu,video_pic,0.1703,neutral,Vidu is fine but nothing spectacular.
+2025-11-08 16:20:31,Polycoder,code,0.129,neutral,"Trying out Polycoder, seems okay so far."
+2025-11-08 13:36:31,Stability AI,video_pic,0.345,positive,Really impressed with the results from Stability AI!
+2025-11-08 12:53:31,Mistral,text,-0.3714,negative,Not worth the price. Mistral needs improvement.
+2025-11-08 12:12:31,Animaker,audio,-0.4248,negative,Animaker doesn't live up to the hype honestly.
+2025-11-08 11:36:31,Vidu,video_pic,0.0226,neutral,The free tier of Vidu is limited but usable.
+2025-11-08 10:23:31,Luma Dream Machine,video_pic,-0.2971,negative,Luma Dream Machine was slow and the results were mediocre.
+2025-11-08 10:10:31,DALL-E,video_pic,-0.0023,neutral,The free tier of DALL-E is limited but usable.
+2025-11-08 08:17:31,AskCodi,code,-0.5613,negative,AskCodi doesn't live up to the hype honestly.
+2025-11-08 08:17:31,Claude,text,-0.08,neutral,Claude is fine but nothing spectacular.
+2025-11-08 08:02:31,Speechify,audio,0.1783,neutral,"Mixed feelings about Speechify, has pros and cons."
+2025-11-08 07:21:31,Vidu,video_pic,0.4582,positive,Vidu has been a game changer for my workflow.
+2025-11-08 06:51:31,GitHub Copilot,code,0.59,positive,The quality of GitHub Copilot output is consistently excellent.
+2025-11-08 06:37:31,Synthesys,audio,-0.1583,neutral,"Using Synthesys occasionally, it's decent."
+2025-11-08 02:55:31,Murf AI,audio,-0.2925,negative,Not worth the price. Murf AI needs improvement.
+2025-11-08 02:25:31,Pika Labs,video_pic,0.7927,positive,Customer support for Pika Labs was really helpful too.
+2025-11-07 22:44:31,DALL-E,video_pic,-0.166,neutral,"Switched from another tool to DALL-E, similar experience."
+2025-11-07 22:30:31,Loveable,code,0.0897,neutral,Still evaluating Loveable for our team.
+2025-11-07 22:16:31,Adobe Firefly,video_pic,-0.5042,negative,"Disappointed with Adobe Firefly, expected better quality."
+2025-11-07 16:34:31,DeepSeek,text,0.9392,positive,"Just tried DeepSeek and wow, the accuracy is impressive."
+2025-11-07 14:06:31,Polycoder,code,-0.1541,neutral,"Mixed feelings about Polycoder, has pros and cons."
+2025-11-07 09:18:31,Pika Labs,video_pic,-0.3036,negative,"Having issues with Pika Labs, very frustrating."
+2025-11-07 02:52:31,WellSaid Labs,audio,-0.2777,negative,"WellSaid Labs keeps crashing, really unreliable."
+2025-11-07 00:34:31,Murf AI,audio,0.7727,positive,The quality of Murf AI output is consistently excellent.
+2025-11-07 00:11:31,Replit Ghostwriter,code,0.6729,positive,Replit Ghostwriter helped me finish my project in half the time.
+2025-11-06 23:52:31,Whisper,audio,0.5704,positive,The latest update to Whisper made it even better.
+2025-11-06 20:18:31,Replit Ghostwriter,code,0.7547,positive,Replit Ghostwriter helped me finish my project in half the time.
+2025-11-06 20:15:31,Tabnine,code,0.8356,positive,Love using Tabnine for my daily tasks. Highly recommend!
+2025-11-06 19:35:31,RunwayML,video_pic,0.8644,positive,Really impressed with the results from RunwayML!
+2025-11-06 17:58:31,Pika Labs,video_pic,-0.3004,negative,"Disappointed with Pika Labs, expected better quality."
+2025-11-06 13:40:31,Pika Labs,video_pic,-0.1124,neutral,Pika Labs is fine but nothing spectacular.
+2025-11-06 11:51:31,Claude,text,-0.1467,neutral,Still evaluating Claude for our team.
+2025-11-06 10:46:31,Pika Labs,video_pic,-0.0211,neutral,"Pika Labs does what it says, nothing more."
+2025-11-06 09:39:31,Midjourney,video_pic,-0.487,negative,Midjourney has too many limitations and bugs.
+2025-11-06 09:02:31,Sourcery,code,0.098,neutral,"Switched from another tool to Sourcery, similar experience."
+2025-11-06 06:03:31,Claude,text,0.6121,positive,"Been using Claude for months now, absolutely worth it!"
+2025-11-06 05:01:31,GitHub Copilot,code,0.6588,positive,"Been using GitHub Copilot for months now, absolutely worth it!"
+2025-11-06 03:28:31,Vidu,video_pic,0.0025,neutral,Vidu is fine but nothing spectacular.
+2025-11-06 02:59:31,Pika Labs,video_pic,0.7677,positive,Pika Labs helped me finish my project in half the time.
+2025-11-06 00:16:31,Whisper,audio,0.3143,positive,Customer support for Whisper was really helpful too.
+2025-11-05 23:19:31,Lindy,text,0.2615,positive,Love using Lindy for my daily tasks. Highly recommend!
+2025-11-05 23:10:31,OpenCV,video_pic,-0.0483,neutral,"Trying out OpenCV, seems okay so far."
+2025-11-05 21:30:31,Kits AI,audio,-0.103,neutral,"Kits AI does what it says, nothing more."
+2025-11-05 18:02:31,Kits AI,audio,0.7911,positive,Kits AI has been a game changer for my workflow.
+2025-11-05 16:45:31,Copy.ai,text,-0.4105,negative,Cancelled my Copy.ai subscription. Not impressed.
+2025-11-05 16:26:31,Tabby,code,-0.8353,negative,Tabby doesn't live up to the hype honestly.
+2025-11-05 13:22:31,Codeium,code,-0.6248,negative,Cancelled my Codeium subscription. Not impressed.
+2025-11-05 12:56:31,Tabby,code,-0.1687,neutral,"Trying out Tabby, seems okay so far."
+2025-11-05 12:48:31,Tabby,code,0.6275,positive,The quality of Tabby output is consistently excellent.
+2025-11-05 08:54:31,Tabby,code,-0.9008,negative,Tabby doesn't live up to the hype honestly.
+2025-11-05 07:47:31,Stability AI,video_pic,-0.5137,negative,"Having issues with Stability AI, very frustrating."
+2025-11-05 06:44:31,Vidu,video_pic,-0.6772,negative,"Disappointed with Vidu, expected better quality."
+2025-11-05 05:13:31,Vidu,video_pic,-0.1788,neutral,The free tier of Vidu is limited but usable.
+2025-11-05 03:44:31,WellSaid Labs,audio,-0.4623,negative,WellSaid Labs was slow and the results were mediocre.
+2025-11-05 01:29:31,Polycoder,code,0.5936,positive,The latest update to Polycoder made it even better.
+2025-11-04 23:46:31,Replit Ghostwriter,code,0.0306,neutral,"Replit Ghostwriter does what it says, nothing more."
+2025-11-04 20:28:31,PlayHT,audio,-0.5662,negative,"Disappointed with PlayHT, expected better quality."
+2025-11-04 19:48:31,ChatGPT,text,0.5595,positive,Customer support for ChatGPT was really helpful too.
+2025-11-04 19:46:31,Whisper,audio,0.0173,neutral,"Switched from another tool to Whisper, similar experience."
+2025-11-04 19:40:31,Copy.ai,text,0.1412,neutral,"Copy.ai does what it says, nothing more."
+2025-11-04 19:11:31,Loveable,code,0.5347,positive,Loveable has been a game changer for my workflow.
+2025-11-04 15:48:31,Stability AI,video_pic,0.0379,neutral,Stability AI works but the UI could be better.
+2025-11-04 13:54:31,Hume,audio,0.3351,positive,The quality of Hume output is consistently excellent.
+2025-11-04 13:18:31,Loveable,code,-0.5678,negative,Loveable was slow and the results were mediocre.
+2025-11-04 12:56:31,Adobe Firefly,video_pic,-0.6295,negative,Adobe Firefly was slow and the results were mediocre.
+2025-11-04 10:31:31,Amazon Q Developer,code,-0.1005,neutral,Still evaluating Amazon Q Developer for our team.
+2025-11-04 10:13:31,Replit Ghostwriter,code,0.5167,positive,Replit Ghostwriter saves me hours every week. Great investment.
+2025-11-04 09:56:31,Cursor,code,-0.2402,neutral,Don't trust Cursor with private information.
+2025-11-04 09:37:31,Copy.ai,text,0.8942,positive,Copy.ai saves me hours every week. Great investment.
+2025-11-04 09:28:31,Amazon Q Developer,code,-0.6743,negative,Cancelled my Amazon Q Developer subscription. Not impressed.
+2025-11-04 08:07:31,Mistral,text,0.139,neutral,"Using Mistral occasionally, it's decent."
+2025-11-04 07:23:31,Lindy,text,0.5973,positive,Customer support for Lindy was really helpful too.
+2025-11-04 07:13:31,Vidu,video_pic,-0.1723,neutral,"Using Vidu occasionally, it's decent."
+2025-11-04 06:47:31,Cursor,code,-0.2956,negative,Cursor has too many limitations and bugs.
+2025-11-04 05:54:31,ChatGPT,text,0.4147,positive,ChatGPT saves me hours every week. Great investment.
+2025-11-04 05:42:31,Codeium,code,0.6189,positive,Codeium has been a game changer for my workflow.
+2025-11-04 04:03:31,WellSaid Labs,audio,0.3644,positive,The quality of WellSaid Labs output is consistently excellent.
+2025-11-04 03:54:31,Claude,text,0.5493,positive,Customer support for Claude was really helpful too.
+2025-11-04 00:16:31,Claude,text,0.3765,positive,Really impressed with the results from Claude!
+2025-11-04 00:14:31,GitHub Copilot,code,-0.6825,negative,"GitHub Copilot had a data breach recently, be careful."
+2025-11-03 23:56:31,JetBrains AI Assistant,code,0.9171,positive,JetBrains AI Assistant helped me finish my project in half the time.
+2025-11-03 23:24:31,OpenCV,video_pic,0.7353,positive,Customer support for OpenCV was really helpful too.
+2025-11-03 22:48:31,Midjourney,video_pic,0.2574,positive,Midjourney has been a game changer for my workflow.
+2025-11-03 20:55:31,Adobe Firefly,video_pic,0.4659,positive,Really impressed with the results from Adobe Firefly!
+2025-11-03 19:59:31,Midjourney,video_pic,0.2718,positive,Midjourney has been a game changer for my workflow.
+2025-11-03 19:13:31,Animaker,audio,-0.3752,negative,Not worth the price. Animaker needs improvement.
+2025-11-03 18:40:31,Writesonic,text,-0.8351,negative,The output from Writesonic is often inaccurate.
+2025-11-03 17:00:31,DupDub,audio,-0.7197,negative,DupDub has too many limitations and bugs.
+2025-11-03 15:18:31,Midjourney,video_pic,0.5966,positive,"Been using Midjourney for months now, absolutely worth it!"
+2025-11-03 14:19:31,Hume,audio,0.4449,positive,The latest update to Hume made it even better.
+2025-11-03 13:24:31,Tabby,code,-0.4986,negative,Would not recommend Tabby in its current state.
+2025-11-03 13:02:31,CodeWhisperer,code,-0.3938,negative,"Having issues with CodeWhisperer, very frustrating."
+2025-11-03 10:26:31,Sourcery,code,-0.0383,neutral,"Sourcery does what it says, nothing more."
+2025-11-03 08:51:31,WellSaid Labs,audio,0.843,positive,Really impressed with the results from WellSaid Labs!
+2025-11-03 07:28:31,Writesonic,text,0.0677,neutral,"Trying out Writesonic, seems okay so far."
+2025-11-03 07:05:31,Tabnine,code,0.7662,positive,Customer support for Tabnine was really helpful too.
+2025-11-03 07:05:31,Vidu,video_pic,-0.0565,neutral,"Switched from another tool to Vidu, similar experience."
+2025-11-03 04:31:31,DALL-E,video_pic,-0.6038,negative,Not sure if DALL-E is safe for confidential work.
+2025-11-03 03:59:31,Animaker,audio,0.876,positive,Animaker helped me finish my project in half the time.
+2025-11-03 02:24:31,Gemini,text,-0.3151,negative,Gemini has too many limitations and bugs.
+2025-11-03 00:29:31,Lindy,text,-0.1497,neutral,"Switched from another tool to Lindy, similar experience."
+2025-11-02 22:50:31,Polycoder,code,-0.8755,negative,"Having issues with Polycoder, very frustrating."
+2025-11-02 20:14:31,PlayHT,audio,0.7296,positive,PlayHT saves me hours every week. Great investment.
+2025-11-02 18:11:31,DreamStudio,video_pic,0.7165,positive,Really impressed with the results from DreamStudio!
+2025-11-02 16:34:31,ChatGPT,text,-0.5506,negative,"ChatGPT keeps crashing, really unreliable."
+2025-11-02 13:56:31,Whisper,audio,0.6335,positive,"Been using Whisper for months now, absolutely worth it!"
+2025-11-02 11:46:31,Lindy,text,-0.3552,negative,Would not recommend Lindy in its current state.
+2025-11-02 09:54:31,WellSaid Labs,audio,-0.7509,negative,"Having issues with WellSaid Labs, very frustrating."
+2025-11-02 09:11:31,WellSaid Labs,audio,0.0106,neutral,"Trying out WellSaid Labs, seems okay so far."
+2025-11-02 08:56:31,ElevenLabs,audio,-0.5133,negative,"Disappointed with ElevenLabs, expected better quality."
+2025-11-02 07:34:31,Pika Labs,video_pic,-0.0999,neutral,Pika Labs works but the UI could be better.
+2025-11-02 06:46:31,CodeWhisperer,code,0.3139,positive,CodeWhisperer has been a game changer for my workflow.
+2025-11-02 04:28:31,Claude,text,-0.9508,negative,Claude has too many limitations and bugs.
+2025-11-02 04:26:31,Murf AI,audio,-0.0263,neutral,Still evaluating Murf AI for our team.
+2025-11-02 03:32:31,ElevenLabs,audio,-0.3823,negative,"Disappointed with ElevenLabs, expected better quality."
+2025-11-02 02:36:31,ChatGPT,text,-0.7782,negative,Cancelled my ChatGPT subscription. Not impressed.
+2025-11-02 01:59:31,DreamStudio,video_pic,0.4962,positive,DreamStudio has been a game changer for my workflow.
+2025-11-02 01:46:31,Adobe Firefly,video_pic,0.4546,positive,Adobe Firefly saves me hours every week. Great investment.
+2025-11-02 01:17:31,Greta,code,-0.2912,neutral,Is Greta safe to use with sensitive data?
+2025-11-02 01:13:31,JetBrains AI Assistant,code,0.7994,positive,JetBrains AI Assistant has been a game changer for my workflow.
+2025-11-01 21:38:31,Midjourney,video_pic,-0.9769,negative,Would not recommend Midjourney in its current state.
+2025-11-01 21:29:31,Copy.ai,text,0.613,positive,Really impressed with the results from Copy.ai!
+2025-11-01 20:06:31,AskCodi,code,-0.4563,negative,The output from AskCodi is often inaccurate.
+2025-11-01 19:24:31,Jasper,text,0.3701,positive,Customer support for Jasper was really helpful too.
+2025-11-01 19:01:31,Greta,code,0.1874,neutral,Greta is fine but nothing spectacular.
+2025-11-01 18:18:31,PlayHT,audio,-0.583,negative,Cancelled my PlayHT subscription. Not impressed.
+2025-11-01 17:15:31,Synthesys,audio,-0.5937,negative,Not worth the price. Synthesys needs improvement.
+2025-11-01 15:26:31,Copy.ai,text,-0.0558,neutral,"Switched from another tool to Copy.ai, similar experience."
+2025-11-01 12:59:31,Cursor,code,0.6064,positive,Customer support for Cursor was really helpful too.
+2025-11-01 12:29:31,Amazon Q Developer,code,-0.0596,neutral,"Amazon Q Developer does what it says, nothing more."
+2025-11-01 11:47:31,Claude,text,0.8708,positive,Really impressed with the results from Claude!
+2025-11-01 11:38:31,DreamStudio,video_pic,0.8319,positive,DreamStudio saves me hours every week. Great investment.
+2025-11-01 10:44:31,Cursor,code,0.858,positive,"Been using Cursor for months now, absolutely worth it!"
+2025-11-01 09:45:31,Luma Dream Machine,video_pic,0.5451,positive,"Been using Luma Dream Machine for months now, absolutely worth it!"
+2025-11-01 04:09:31,ChatGPT,text,0.5585,positive,"Been using ChatGPT for months now, absolutely worth it!"
+2025-11-01 01:43:31,GitHub Copilot,code,-0.0592,neutral,The free tier of GitHub Copilot is limited but usable.
+2025-11-01 00:54:31,Adobe Firefly,video_pic,-0.0301,neutral,"Using Adobe Firefly occasionally, it's decent."
+2025-11-01 00:48:31,Copy.ai,text,0.3615,positive,Copy.ai helped me finish my project in half the time.
+2025-10-31 23:27:31,Kits AI,audio,-0.7106,negative,Kits AI was slow and the results were mediocre.
+2025-10-31 22:33:31,Murf AI,audio,-0.0621,neutral,The free tier of Murf AI is limited but usable.
+2025-10-31 21:32:31,Kits AI,audio,-0.4181,negative,"Disappointed with Kits AI, expected better quality."
+2025-10-31 17:44:31,DupDub,audio,0.5548,positive,DupDub has been a game changer for my workflow.
+2025-10-31 16:52:31,Stability AI,video_pic,-0.3679,negative,Stability AI was slow and the results were mediocre.
+2025-10-31 15:06:31,Stability AI,video_pic,-0.8037,negative,Stability AI has too many limitations and bugs.
+2025-10-31 14:39:31,Synthesys,audio,-0.0941,neutral,Worried about data privacy with Synthesys.
+2025-10-31 13:25:31,Tabnine,code,-0.022,neutral,Tabnine works fine for basic tasks.
+2025-10-31 13:09:31,Claude,text,0.4123,positive,Claude helped me finish my project in half the time.
+2025-10-31 12:38:31,Hume,audio,0.1265,neutral,"Mixed feelings about Hume, has pros and cons."
+2025-10-31 11:49:31,Tabnine,code,0.335,positive,The latest update to Tabnine made it even better.
+2025-10-31 11:45:31,Polycoder,code,0.157,neutral,"Switched from another tool to Polycoder, similar experience."
+2025-10-31 11:42:31,CodeWhisperer,code,-0.182,neutral,Still evaluating CodeWhisperer for our team.
+2025-10-31 10:39:31,OpenCV,video_pic,-0.6402,negative,Would not recommend OpenCV in its current state.
+2025-10-31 07:17:31,Greta,code,-0.553,negative,Greta has too many limitations and bugs.
+2025-10-31 06:12:31,Synthesys,audio,0.5793,positive,Synthesys has been a game changer for my workflow.
+2025-10-31 04:52:31,ChatGPT,text,-0.1493,neutral,Still evaluating ChatGPT for our team.
+2025-10-31 04:34:31,Greta,code,0.0821,neutral,"Trying out Greta, seems okay so far."
+2025-10-31 04:00:31,AskCodi,code,0.7568,positive,The latest update to AskCodi made it even better.
+2025-10-31 03:17:31,Tabby,code,0.5146,positive,Tabby saves me hours every week. Great investment.
+2025-10-31 02:48:31,Vidu,video_pic,0.9364,positive,The quality of Vidu output is consistently excellent.
+2025-10-31 00:31:31,RunwayML,video_pic,0.4143,positive,RunwayML has been a game changer for my workflow.
+2025-10-30 21:48:31,Stability AI,video_pic,0.1358,neutral,"Stability AI does what it says, nothing more."
+2025-10-30 21:21:31,Tabnine,code,-0.1244,neutral,"Trying out Tabnine, seems okay so far."
+2025-10-30 20:39:31,ElevenLabs,audio,0.8415,positive,Really impressed with the results from ElevenLabs!
+2025-10-30 18:01:31,Claude,text,0.5079,positive,Claude helped me finish my project in half the time.
+2025-10-30 17:52:31,Jasper,text,0.1791,neutral,"Jasper does what it says, nothing more."
+2025-10-30 13:00:31,Sourcery,code,-0.7395,negative,Would not recommend Sourcery in its current state.
+2025-10-30 09:46:31,WellSaid Labs,audio,0.2986,positive,The quality of WellSaid Labs output is consistently excellent.
+2025-10-30 08:12:31,Lindy,text,0.2925,positive,The latest update to Lindy made it even better.
+2025-10-30 04:42:31,Midjourney,video_pic,0.736,positive,Really impressed with the results from Midjourney!
+2025-10-30 01:03:31,Midjourney,video_pic,-0.098,neutral,Midjourney works fine for basic tasks.
+2025-10-29 22:57:31,OpenCV,video_pic,-0.9254,negative,OpenCV has too many limitations and bugs.
+2025-10-29 22:41:31,Cursor,code,0.7686,positive,Cursor saves me hours every week. Great investment.
+2025-10-29 21:20:31,Greta,code,0.081,neutral,"Using Greta occasionally, it's decent."
+2025-10-29 20:13:31,Pika Labs,video_pic,0.7375,positive,"Been using Pika Labs for months now, absolutely worth it!"
+2025-10-29 18:37:31,Pika Labs,video_pic,0.507,positive,The latest update to Pika Labs made it even better.
+2025-10-29 17:59:31,ChatGPT,text,0.9411,positive,The latest update to ChatGPT made it even better.
+2025-10-29 16:59:31,Amazon Q Developer,code,-0.0937,neutral,"Mixed feelings about Amazon Q Developer, has pros and cons."
+2025-10-29 16:21:31,Replit Ghostwriter,code,0.5606,positive,The quality of Replit Ghostwriter output is consistently excellent.
+2025-10-29 15:11:31,Loveable,code,-0.8472,negative,Would not recommend Loveable in its current state.
+2025-10-29 14:14:31,Animaker,audio,0.8993,positive,Customer support for Animaker was really helpful too.
+2025-10-29 12:55:31,Claude,text,0.0407,neutral,The free tier of Claude is limited but usable.
+2025-10-29 12:51:31,Stability AI,video_pic,0.3211,positive,The latest update to Stability AI made it even better.
+2025-10-29 10:56:31,ElevenLabs,audio,0.7985,positive,The latest update to ElevenLabs made it even better.
+2025-10-29 10:04:31,ChatGPT,text,0.5456,positive,ChatGPT helped me finish my project in half the time.
+2025-10-29 07:33:31,Kits AI,audio,0.0548,neutral,"Switched from another tool to Kits AI, similar experience."
+2025-10-29 06:51:31,PlayHT,audio,0.5195,positive,"Been using PlayHT for months now, absolutely worth it!"
+2025-10-29 05:26:31,Writesonic,text,0.0263,neutral,Writesonic works but the UI could be better.
+2025-10-29 05:20:31,Claude,text,0.3674,positive,Really impressed with the results from Claude!
+2025-10-29 02:56:31,Tabnine,code,0.6472,positive,"Just tried Tabnine and wow, the accuracy is impressive."
+2025-10-29 02:17:31,ChatGPT,text,0.6976,positive,The latest update to ChatGPT made it even better.
+2025-10-29 01:16:31,Copy.ai,text,-0.2183,neutral,The privacy policy of Copy.ai is concerning.
+2025-10-28 20:17:31,GitHub Copilot,code,0.268,positive,GitHub Copilot helped me finish my project in half the time.
+2025-10-28 18:21:31,DeepSeek,text,0.1583,neutral,DeepSeek is fine but nothing spectacular.
+2025-10-28 13:30:31,Codeium,code,-0.2573,neutral,Not sure if Codeium is safe for confidential work.
+2025-10-28 12:59:31,Midjourney,video_pic,0.3393,positive,"Just tried Midjourney and wow, the accuracy is impressive."
+2025-10-28 11:43:31,Stability AI,video_pic,0.0459,neutral,"Using Stability AI occasionally, it's decent."
+2025-10-28 10:24:31,AskCodi,code,-0.093,neutral,Don't trust AskCodi with private information.
+2025-10-28 07:36:31,GitHub Copilot,code,0.0166,neutral,"Using GitHub Copilot occasionally, it's decent."
+2025-10-28 07:10:31,Stability AI,video_pic,0.2701,positive,"Just tried Stability AI and wow, the accuracy is impressive."
+2025-10-28 00:33:31,Pika Labs,video_pic,0.5033,positive,The quality of Pika Labs output is consistently excellent.
+2025-10-27 23:48:31,Amazon Q Developer,code,-0.7993,negative,Amazon Q Developer doesn't live up to the hype honestly.
+2025-10-27 23:19:31,Greta,code,0.7058,positive,"Just tried Greta and wow, the accuracy is impressive."
+2025-10-27 22:54:31,Copy.ai,text,0.6967,positive,The quality of Copy.ai output is consistently excellent.
+2025-10-27 21:50:31,JetBrains AI Assistant,code,-0.3674,negative,Would not recommend JetBrains AI Assistant in its current state.
+2025-10-27 19:49:31,Lindy,text,0.7353,positive,Love using Lindy for my daily tasks. Highly recommend!
+2025-10-27 19:41:31,Claude,text,0.7468,positive,The quality of Claude output is consistently excellent.
+2025-10-27 19:40:31,Tabnine,code,0.3569,positive,The quality of Tabnine output is consistently excellent.
+2025-10-27 18:46:31,Writesonic,text,0.1594,neutral,"Mixed feelings about Writesonic, has pros and cons."
+2025-10-27 16:47:31,Jasper,text,0.1873,neutral,Jasper is fine but nothing spectacular.
+2025-10-27 12:07:31,ChatGPT,text,0.4599,positive,The quality of ChatGPT output is consistently excellent.
+2025-10-27 07:41:31,Vidu,video_pic,-0.7094,negative,Is Vidu safe to use with sensitive data?
+2025-10-27 04:42:31,Writesonic,text,0.7669,positive,Writesonic helped me finish my project in half the time.
+2025-10-27 03:07:31,DeepSeek,text,0.1809,neutral,"Trying out DeepSeek, seems okay so far."
+2025-10-27 02:52:31,Speechify,audio,0.6771,positive,Speechify has been a game changer for my workflow.
+2025-10-27 02:19:31,CodeWhisperer,code,0.7516,positive,"Just tried CodeWhisperer and wow, the accuracy is impressive."
+2025-10-27 00:36:31,CodeWhisperer,code,0.4062,positive,Love using CodeWhisperer for my daily tasks. Highly recommend!
+2025-10-26 23:31:31,Adobe Firefly,video_pic,0.4818,positive,Really impressed with the results from Adobe Firefly!
+2025-10-26 21:52:31,DupDub,audio,0.2909,positive,"Been using DupDub for months now, absolutely worth it!"
+2025-10-26 20:45:31,Whisper,audio,0.045,neutral,Still evaluating Whisper for our team.
+2025-10-26 20:38:31,Polycoder,code,0.1536,neutral,"Switched from another tool to Polycoder, similar experience."
+2025-10-26 20:30:31,Whisper,audio,0.4518,positive,Whisper helped me finish my project in half the time.
+2025-10-26 20:12:31,Midjourney,video_pic,0.8794,positive,Midjourney has been a game changer for my workflow.
+2025-10-26 18:13:31,Replit Ghostwriter,code,-0.7628,negative,Replit Ghostwriter has too many limitations and bugs.
+2025-10-26 17:22:31,Luma Dream Machine,video_pic,0.5545,positive,Love using Luma Dream Machine for my daily tasks. Highly recommend!
+2025-10-26 17:17:31,Kits AI,audio,-0.5486,negative,"Disappointed with Kits AI, expected better quality."
+2025-10-26 17:06:31,Animaker,audio,0.1927,neutral,Still evaluating Animaker for our team.
+2025-10-26 16:06:31,Writesonic,text,-0.1046,neutral,"Using Writesonic occasionally, it's decent."
+2025-10-26 15:47:31,Sourcery,code,-0.1829,neutral,"Mixed feelings about Sourcery, has pros and cons."
+2025-10-26 14:08:31,Kits AI,audio,0.0233,neutral,"Trying out Kits AI, seems okay so far."
+2025-10-26 13:51:31,PlayHT,audio,-0.6221,negative,Security issue reported with PlayHT last week.
+2025-10-26 11:56:31,PlayHT,audio,-0.5557,negative,"Having issues with PlayHT, very frustrating."
+2025-10-26 11:34:31,Hume,audio,0.943,positive,Love using Hume for my daily tasks. Highly recommend!
+2025-10-26 09:12:31,Copy.ai,text,0.0924,neutral,"Switched from another tool to Copy.ai, similar experience."
+2025-10-26 08:33:31,DupDub,audio,0.0254,neutral,"Trying out DupDub, seems okay so far."
+2025-10-26 07:27:31,Stability AI,video_pic,0.5519,positive,Stability AI helped me finish my project in half the time.
+2025-10-26 06:48:31,Bolt,code,0.5497,positive,The quality of Bolt output is consistently excellent.
+2025-10-26 05:33:31,AskCodi,code,-0.8156,negative,"Having issues with AskCodi, very frustrating."
+2025-10-26 02:21:31,OpenCV,video_pic,-0.6659,negative,OpenCV has too many limitations and bugs.
+2025-10-25 22:01:31,Adobe Firefly,video_pic,-0.6292,negative,"Adobe Firefly keeps crashing, really unreliable."
+2025-10-25 20:30:31,CodeWhisperer,code,-0.8886,negative,CodeWhisperer was slow and the results were mediocre.
+2025-10-25 20:18:31,Gemini,text,-0.1524,neutral,The free tier of Gemini is limited but usable.
+2025-10-25 15:07:31,Codeium,code,-0.2591,neutral,Concerned about security when using Codeium.
+2025-10-25 12:57:31,Amazon Q Developer,code,0.4427,positive,Amazon Q Developer helped me finish my project in half the time.
+2025-10-25 12:39:31,Greta,code,-0.1911,neutral,"Using Greta occasionally, it's decent."
+2025-10-25 10:35:31,Tabnine,code,0.5843,positive,"Been using Tabnine for months now, absolutely worth it!"
+2025-10-25 09:52:31,Copy.ai,text,-0.8551,negative,"Disappointed with Copy.ai, expected better quality."
+2025-10-25 09:48:31,DupDub,audio,-0.2932,negative,"DupDub keeps crashing, really unreliable."
+2025-10-25 07:23:31,Gemini,text,-0.8445,negative,"Gemini keeps crashing, really unreliable."
+2025-10-25 06:34:31,Stability AI,video_pic,0.0685,neutral,"Stability AI does what it says, nothing more."
+2025-10-25 01:59:31,Speechify,audio,-0.2942,neutral,The privacy policy of Speechify is concerning.
+2025-10-25 00:48:31,Animaker,audio,-0.2783,neutral,Is Animaker safe to use with sensitive data?
+2025-10-25 00:47:31,DreamStudio,video_pic,-0.0533,neutral,"Using DreamStudio occasionally, it's decent."
+2025-10-24 20:13:31,Bolt,code,-0.0885,neutral,The privacy policy of Bolt is concerning.
+2025-10-24 19:56:31,PlayHT,audio,0.0568,neutral,Still evaluating PlayHT for our team.
+2025-10-24 17:21:31,Amazon Q Developer,code,0.442,positive,Amazon Q Developer has been a game changer for my workflow.
+2025-10-24 14:03:31,Speechify,audio,-0.0022,neutral,The privacy policy of Speechify is concerning.
+2025-10-24 09:43:31,Stability AI,video_pic,-0.1467,neutral,"Stability AI does what it says, nothing more."
+2025-10-24 06:57:31,Writesonic,text,0.129,neutral,"Using Writesonic occasionally, it's decent."
+2025-10-24 06:34:31,OpenCV,video_pic,0.3238,positive,Customer support for OpenCV was really helpful too.
+2025-10-24 06:25:31,Mistral,text,-0.3065,negative,Concerned about security when using Mistral.
+2025-10-24 06:13:31,Whisper,audio,0.6007,positive,The quality of Whisper output is consistently excellent.
+2025-10-23 22:58:31,Amazon Q Developer,code,0.7288,positive,Amazon Q Developer has been a game changer for my workflow.
+2025-10-23 21:22:31,DeepSeek,text,0.7282,positive,Really impressed with the results from DeepSeek!
+2025-10-23 17:58:31,Jasper,text,0.8319,positive,"Just tried Jasper and wow, the accuracy is impressive."
+2025-10-23 17:48:31,Speechify,audio,-0.7205,negative,Would not recommend Speechify in its current state.
+2025-10-23 17:19:31,ElevenLabs,audio,0.5826,positive,Customer support for ElevenLabs was really helpful too.
+2025-10-23 16:18:31,Polycoder,code,-0.0907,neutral,"Mixed feelings about Polycoder, has pros and cons."
+2025-10-23 16:18:31,ChatGPT,text,-0.106,neutral,"Trying out ChatGPT, seems okay so far."
+2025-10-23 13:50:31,Stability AI,video_pic,0.0492,neutral,"Trying out Stability AI, seems okay so far."
+2025-10-23 13:09:31,Synthesys,audio,0.9246,positive,Really impressed with the results from Synthesys!
+2025-10-23 09:00:31,Hume,audio,0.1704,neutral,"Hume does what it says, nothing more."
+2025-10-23 08:49:31,Vidu,video_pic,-0.5482,negative,"Having issues with Vidu, very frustrating."
+2025-10-23 07:06:31,Pika Labs,video_pic,0.6418,positive,Pika Labs saves me hours every week. Great investment.
+2025-10-23 05:34:31,Tabnine,code,0.891,positive,Tabnine saves me hours every week. Great investment.
+2025-10-23 02:59:31,Polycoder,code,0.8179,positive,Love using Polycoder for my daily tasks. Highly recommend!
+2025-10-23 02:36:31,Whisper,audio,0.7994,positive,Whisper has been a game changer for my workflow.
+2025-10-23 02:22:31,ChatGPT,text,0.9778,positive,"Just tried ChatGPT and wow, the accuracy is impressive."
+2025-10-23 01:14:31,Speechify,audio,0.4415,positive,Customer support for Speechify was really helpful too.
+2025-10-22 19:06:31,Loveable,code,-0.3521,negative,"Having issues with Loveable, very frustrating."
+2025-10-22 17:12:31,Pika Labs,video_pic,-0.4518,negative,"Disappointed with Pika Labs, expected better quality."
+2025-10-22 16:07:31,Speechify,audio,0.3249,positive,"Just tried Speechify and wow, the accuracy is impressive."
+2025-10-22 14:34:31,WellSaid Labs,audio,-0.6038,negative,Would not recommend WellSaid Labs in its current state.
+2025-10-22 14:03:31,Cursor,code,0.111,neutral,"Switched from another tool to Cursor, similar experience."
+2025-10-22 12:33:31,DeepSeek,text,-0.0565,neutral,DeepSeek is fine but nothing spectacular.
+2025-10-22 11:25:31,Copy.ai,text,-0.6024,negative,"Copy.ai keeps crashing, really unreliable."
+2025-10-22 11:23:31,DupDub,audio,-0.8192,negative,"Disappointed with DupDub, expected better quality."
+2025-10-22 10:04:31,Writesonic,text,0.7107,positive,"Just tried Writesonic and wow, the accuracy is impressive."
+2025-10-22 09:06:31,Synthesys,audio,-0.1362,neutral,"Switched from another tool to Synthesys, similar experience."
+2025-10-22 06:41:31,Luma Dream Machine,video_pic,-0.5908,negative,"Disappointed with Luma Dream Machine, expected better quality."
+2025-10-22 05:44:31,Vidu,video_pic,-0.1368,neutral,Vidu works but the UI could be better.
+2025-10-22 04:19:31,Kits AI,audio,0.4602,positive,Kits AI saves me hours every week. Great investment.
+2025-10-22 04:06:31,Synthesys,audio,0.762,positive,Synthesys helped me finish my project in half the time.
+2025-10-22 03:06:31,Pika Labs,video_pic,0.7358,positive,The latest update to Pika Labs made it even better.
+2025-10-22 01:07:31,CodeWhisperer,code,0.5295,positive,CodeWhisperer saves me hours every week. Great investment.
+2025-10-21 22:00:31,Codeium,code,0.1374,neutral,"Switched from another tool to Codeium, similar experience."
+2025-10-21 18:42:31,DupDub,audio,-0.1463,neutral,DupDub works but the UI could be better.
+2025-10-21 18:23:31,DupDub,audio,0.8071,positive,The latest update to DupDub made it even better.
+2025-10-21 16:54:31,Claude,text,0.5181,positive,Claude has been a game changer for my workflow.
+2025-10-21 14:08:31,Cursor,code,-0.3402,negative,Would not recommend Cursor in its current state.
+2025-10-21 12:14:31,Cursor,code,0.0494,neutral,"Mixed feelings about Cursor, has pros and cons."
+2025-10-21 09:51:31,Vidu,video_pic,-0.1088,neutral,Worried about data privacy with Vidu.
+2025-10-21 07:32:31,Tabnine,code,-0.0023,neutral,Tabnine works fine for basic tasks.
+2025-10-21 06:59:31,Amazon Q Developer,code,0.7534,positive,Amazon Q Developer saves me hours every week. Great investment.
+2025-10-21 04:15:31,AskCodi,code,0.8282,positive,"Just tried AskCodi and wow, the accuracy is impressive."
+2025-10-21 03:09:31,Codeium,code,0.3828,positive,Really impressed with the results from Codeium!
+2025-10-21 02:46:31,AskCodi,code,-0.3292,negative,Cancelled my AskCodi subscription. Not impressed.
+2025-10-21 01:17:31,Hume,audio,-0.1387,neutral,Still evaluating Hume for our team.
+2025-10-21 00:27:31,Animaker,audio,-0.0158,neutral,The privacy policy of Animaker is concerning.
+2025-10-21 00:22:31,Stability AI,video_pic,-0.113,neutral,"Mixed feelings about Stability AI, has pros and cons."
+2025-10-20 23:13:31,DreamStudio,video_pic,-0.0958,neutral,"Trying out DreamStudio, seems okay so far."
+2025-10-20 22:34:31,AskCodi,code,0.6468,positive,"Been using AskCodi for months now, absolutely worth it!"
+2025-10-20 22:19:31,OpenCV,video_pic,-0.4145,negative,Not worth the price. OpenCV needs improvement.
+2025-10-20 21:33:31,Animaker,audio,0.0027,neutral,Animaker works fine for basic tasks.
+2025-10-20 20:11:31,GitHub Copilot,code,-0.5684,negative,Would not recommend GitHub Copilot in its current state.
+2025-10-20 18:24:31,Codeium,code,0.5523,positive,Codeium saves me hours every week. Great investment.
+2025-10-20 14:32:31,Codeium,code,0.6221,positive,Really impressed with the results from Codeium!
+2025-10-20 13:32:31,Jasper,text,0.5637,positive,The quality of Jasper output is consistently excellent.
+2025-10-20 13:28:31,Loveable,code,0.6383,positive,Love using Loveable for my daily tasks. Highly recommend!
+2025-10-20 12:00:31,Tabby,code,0.8697,positive,Tabby has been a game changer for my workflow.
+2025-10-20 10:39:31,DALL-E,video_pic,-0.0827,neutral,"DALL-E does what it says, nothing more."
+2025-10-20 09:30:31,Murf AI,audio,-0.0917,neutral,Murf AI works but the UI could be better.
+2025-10-20 05:01:31,Copy.ai,text,-0.0087,neutral,Copy.ai works fine for basic tasks.
+2025-10-20 04:47:31,Amazon Q Developer,code,0.2583,positive,The quality of Amazon Q Developer output is consistently excellent.
+2025-10-20 04:45:31,Writesonic,text,0.0763,neutral,"Switched from another tool to Writesonic, similar experience."
+2025-10-20 00:59:31,DreamStudio,video_pic,-0.3628,negative,Cancelled my DreamStudio subscription. Not impressed.
+2025-10-19 23:08:31,Midjourney,video_pic,0.0378,neutral,"Trying out Midjourney, seems okay so far."
+2025-10-19 22:10:31,Luma Dream Machine,video_pic,0.7375,positive,The latest update to Luma Dream Machine made it even better.
+2025-10-19 20:00:31,Tabby,code,-0.6607,negative,"Having issues with Tabby, very frustrating."
+2025-10-19 17:52:31,DeepSeek,text,-0.7808,negative,"Disappointed with DeepSeek, expected better quality."
+2025-10-19 15:40:31,Writesonic,text,0.7233,positive,Writesonic has been a game changer for my workflow.
+2025-10-19 15:37:31,Synthesys,audio,0.6564,positive,Synthesys helped me finish my project in half the time.

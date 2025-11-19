@@ -88,7 +88,8 @@ logs/
 
 # Data artifacts
 /data/raw/
-/data/processed/
+/data/processed/*
+!/data/processed/sentiment.csv
 /data/samples/
 
 # Model artifacts (can be large)

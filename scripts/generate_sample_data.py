@@ -1,18 +1,11 @@
 #!/usr/bin/env python3
 """
-Generate sample sentiment data for dashboard demo.
+Generate sample sentiment data for dashboard testing.
 
-This script creates realistic demo data for the AISentinel dashboard,
-allowing you to test all features without needing real API data.
-
-The generated data includes:
-- 200 sample mentions across 10 popular AI tools
-- Realistic sentiment distribution (positive-skewed for popular tools)
-- Date range spanning the last 30 days
-- Sample user text for each sentiment category
+This script creates mock data that mirrors the exact structure
+produced by the real data collectors (Reddit, HackerNews, Twitter).
 
 Output: data/processed/sentiment.csv
-    This is the same file the dashboard loads automatically.
 
 Usage:
     python scripts/generate_sample_data.py
@@ -28,110 +21,208 @@ import os
 # Create data directory if it doesn't exist
 os.makedirs("data/processed", exist_ok=True)
 
-# Sample AI tools from the taxonomy
-tools_data = [
-    ("ChatGPT", "text_and_chat"),
-    ("Claude", "text_and_chat"),
-    ("Gemini", "text_and_chat"),
-    ("GitHub Copilot", "coding_and_dev"),
-    ("Cursor", "coding_and_dev"),
-    ("Tabnine", "coding_and_dev"),
-    ("Midjourney", "images_and_video"),
-    ("DALL-E", "images_and_video"),
-    ("Whisper", "audio_and_speech"),
-    ("ElevenLabs", "audio_and_speech"),
+# Tools and categories matching src/utils/taxonomy.py
+# Category values: "text", "video_pic", "audio", "code"
+TOOLS_DATA = [
+    # Text & Chat (Category.TEXT = "text")
+    ("ChatGPT", "text"),
+    ("Claude", "text"),
+    ("Gemini", "text"),
+    ("DeepSeek", "text"),
+    ("Mistral", "text"),
+    ("Jasper", "text"),
+    ("Copy.ai", "text"),
+    ("Writesonic", "text"),
+    ("Lindy", "text"),
+    # Coding & Dev (Category.CODE = "code")
+    ("GitHub Copilot", "code"),
+    ("Amazon Q Developer", "code"),
+    ("CodeWhisperer", "code"),
+    ("Tabnine", "code"),
+    ("Tabby", "code"),
+    ("Replit Ghostwriter", "code"),
+    ("Bolt", "code"),
+    ("Loveable", "code"),
+    ("JetBrains AI Assistant", "code"),
+    ("Cursor", "code"),
+    ("Codeium", "code"),
+    ("Polycoder", "code"),
+    ("AskCodi", "code"),
+    ("Sourcery", "code"),
+    ("Greta", "code"),
+    # Image & Video (Category.VIDEO_PIC = "video_pic")
+    ("Stability AI", "video_pic"),
+    ("RunwayML", "video_pic"),
+    ("Midjourney", "video_pic"),
+    ("DALL-E", "video_pic"),
+    ("DreamStudio", "video_pic"),
+    ("OpenCV", "video_pic"),
+    ("Adobe Firefly", "video_pic"),
+    ("Pika Labs", "video_pic"),
+    ("Luma Dream Machine", "video_pic"),
+    ("Vidu", "video_pic"),
+    # Audio & Speech (Category.AUDIO = "audio")
+    ("Whisper", "audio"),
+    ("ElevenLabs", "audio"),
+    ("Murf AI", "audio"),
+    ("PlayHT", "audio"),
+    ("Speechify", "audio"),
+    ("Synthesys", "audio"),
+    ("Animaker", "audio"),
+    ("Kits AI", "audio"),
+    ("WellSaid Labs", "audio"),
+    ("Hume", "audio"),
+    ("DupDub", "audio"),
 ]
 
-# Generate sample data
-num_samples = 200
-data = []
+# Sample texts organized by sentiment
+# Includes some privacy-related keywords to test privacy scoring
+POSITIVE_TEXTS = [
+    "Really impressed with the results from {tool}!",
+    "{tool} has been a game changer for my workflow.",
+    "Love using {tool} for my daily tasks. Highly recommend!",
+    "The quality of {tool} output is consistently excellent.",
+    "Been using {tool} for months now, absolutely worth it!",
+    "{tool} saves me hours every week. Great investment.",
+    "Just tried {tool} and wow, the accuracy is impressive.",
+    "{tool} helped me finish my project in half the time.",
+    "The latest update to {tool} made it even better.",
+    "Customer support for {tool} was really helpful too.",
+]
 
-for _ in range(num_samples):
-    tool, category = random.choice(tools_data)
+NEUTRAL_TEXTS = [
+    "Trying out {tool}, seems okay so far.",
+    "{tool} works fine for basic tasks.",
+    "Mixed feelings about {tool}, has pros and cons.",
+    "Using {tool} occasionally, it's decent.",
+    "{tool} is fine but nothing spectacular.",
+    "Still evaluating {tool} for our team.",
+    "{tool} does what it says, nothing more.",
+    "Switched from another tool to {tool}, similar experience.",
+    "The free tier of {tool} is limited but usable.",
+    "{tool} works but the UI could be better.",
+]
 
-    # Generate sentiment skewed towards positive for popular tools
-    sentiment_roll = random.random()
-    if tool in ["ChatGPT", "Claude", "GitHub Copilot"]:
-        if sentiment_roll < 0.6:
-            label = "positive"
-            score = random.uniform(0.3, 1.0)
-        elif sentiment_roll < 0.85:
-            label = "neutral"
-            score = random.uniform(-0.2, 0.3)
+NEGATIVE_TEXTS = [
+    "Disappointed with {tool}, expected better quality.",
+    "{tool} has too many limitations and bugs.",
+    "Not worth the price. {tool} needs improvement.",
+    "Having issues with {tool}, very frustrating.",
+    "{tool} doesn't live up to the hype honestly.",
+    "The output from {tool} is often inaccurate.",
+    "{tool} keeps crashing, really unreliable.",
+    "Cancelled my {tool} subscription. Not impressed.",
+    "{tool} was slow and the results were mediocre.",
+    "Would not recommend {tool} in its current state.",
+]
+
+# Privacy-related texts (for testing privacy score calculation)
+PRIVACY_CONCERN_TEXTS = [
+    "Worried about data privacy with {tool}.",
+    "Is {tool} safe to use with sensitive data?",
+    "Concerned about security when using {tool}.",
+    "{tool} had a data breach recently, be careful.",
+    "Not sure if {tool} is safe for confidential work.",
+    "The privacy policy of {tool} is concerning.",
+    "Don't trust {tool} with private information.",
+    "Security issue reported with {tool} last week.",
+]
+
+
+def generate_sample_data(num_samples: int = 500) -> pd.DataFrame:
+    """
+    Generate mock sentiment data matching real collector output format.
+
+    Args:
+        num_samples: Number of sample records to generate
+
+    Returns:
+        DataFrame with columns: created_at, tool, category, score, label, text
+    """
+    data = []
+
+    for i in range(num_samples):
+        tool, category = random.choice(TOOLS_DATA)
+
+        # Generate sentiment with realistic distribution
+        # Popular tools skew positive, others more balanced
+        sentiment_roll = random.random()
+
+        if tool in ["ChatGPT", "Claude", "GitHub Copilot", "Midjourney"]:
+            # Popular tools: 55% positive, 30% neutral, 15% negative
+            if sentiment_roll < 0.55:
+                label = "positive"
+                score = random.uniform(0.25, 1.0)
+            elif sentiment_roll < 0.85:
+                label = "neutral"
+                score = random.uniform(-0.2, 0.2)
+            else:
+                label = "negative"
+                score = random.uniform(-1.0, -0.25)
         else:
-            label = "negative"
-            score = random.uniform(-1.0, -0.2)
-    else:
-        if sentiment_roll < 0.45:
-            label = "positive"
-            score = random.uniform(0.2, 0.9)
-        elif sentiment_roll < 0.75:
-            label = "neutral"
-            score = random.uniform(-0.3, 0.3)
+            # Other tools: 40% positive, 35% neutral, 25% negative
+            if sentiment_roll < 0.40:
+                label = "positive"
+                score = random.uniform(0.25, 0.95)
+            elif sentiment_roll < 0.75:
+                label = "neutral"
+                score = random.uniform(-0.2, 0.2)
+            else:
+                label = "negative"
+                score = random.uniform(-0.95, -0.25)
+
+        # Generate timestamp within last 30 days
+        days_ago = random.randint(0, 30)
+        hours_ago = random.randint(0, 23)
+        minutes_ago = random.randint(0, 59)
+        timestamp = datetime.utcnow() - timedelta(
+            days=days_ago,
+            hours=hours_ago,
+            minutes=minutes_ago
+        )
+
+        # Select text based on sentiment
+        # 10% chance of privacy-related text for negative/neutral
+        if random.random() < 0.10 and label != "positive":
+            text = random.choice(PRIVACY_CONCERN_TEXTS).format(tool=tool)
+            # Privacy concerns tend to be more negative
+            if label == "neutral":
+                score = random.uniform(-0.3, 0.0)
+        elif label == "positive":
+            text = random.choice(POSITIVE_TEXTS).format(tool=tool)
+        elif label == "neutral":
+            text = random.choice(NEUTRAL_TEXTS).format(tool=tool)
         else:
-            label = "negative"
-            score = random.uniform(-0.9, -0.2)
+            text = random.choice(NEGATIVE_TEXTS).format(tool=tool)
 
-    # Generate timestamp within last 30 days
-    days_ago = random.randint(0, 30)
-    timestamp = datetime.now() - timedelta(days=days_ago, hours=random.randint(0, 23))
+        data.append({
+            "created_at": timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+            "tool": tool,
+            "category": category,
+            "score": round(score, 4),
+            "label": label,
+            "text": text,
+        })
 
-    # Generate sample text
-    positive_texts = [
-        f"{tool} is amazing! Really impressed with the results.",
-        f"Love using {tool} for my daily work. Highly recommend!",
-        f"{tool} has been a game changer for productivity.",
-        f"The quality of {tool} output is consistently excellent.",
-        f"Been using {tool} for months now, absolutely worth it!",
-    ]
+    df = pd.DataFrame(data)
+    df = df.sort_values("created_at", ascending=False).reset_index(drop=True)
+    return df
 
-    neutral_texts = [
-        f"Trying out {tool}, seems okay so far.",
-        f"{tool} works fine for basic tasks.",
-        f"Mixed feelings about {tool}, has pros and cons.",
-        f"Using {tool} occasionally, it's decent.",
-        f"{tool} is fine but nothing spectacular.",
-    ]
 
-    negative_texts = [
-        f"Disappointed with {tool}, expected better quality.",
-        f"{tool} has too many limitations and bugs.",
-        f"Not worth the price. {tool} needs improvement.",
-        f"Having issues with {tool}, very frustrating.",
-        f"{tool} doesn't live up to the hype honestly.",
-    ]
+if __name__ == "__main__":
+    # Generate sample data
+    df = generate_sample_data(500)
 
-    if label == "positive":
-        text = random.choice(positive_texts)
-    elif label == "neutral":
-        text = random.choice(neutral_texts)
-    else:
-        text = random.choice(negative_texts)
+    # Save to CSV
+    output_file = "data/processed/sentiment.csv"
+    df.to_csv(output_file, index=False)
 
-    data.append({
-        "id": f"sample_{_}",
-        "created_at": timestamp.isoformat(),
-        "text": text,
-        "tool": tool,
-        "category": category,
-        "label": label,
-        "score": round(score, 3),
-        "confidence": round(random.uniform(0.7, 0.99), 3),
-        "source": "sample_data"
-    })
-
-# Create DataFrame and save
-df = pd.DataFrame(data)
-df = df.sort_values("created_at", ascending=False)
-
-# Save to the file that the dashboard expects
-output_file = "data/processed/sentiment.csv"
-df.to_csv(output_file, index=False)
-
-print(f"✅ Generated {len(df)} sample sentiment records")
-print(f"📁 Saved to: {output_file}")
-print(f"\nTools included: {', '.join([t for t, _ in tools_data])}")
-print(f"\nSentiment distribution:")
-print(df["label"].value_counts())
-print(f"\nDate range: {df['created_at'].min()} to {df['created_at'].max()}")
-print(f"\n🚀 Run 'streamlit run src/dashboard/app.py' to view the dashboard")
+    print(f"Generated {len(df)} sample sentiment records")
+    print(f"Saved to: {output_file}")
+    print(f"\nTools included: {len(TOOLS_DATA)}")
+    print(f"\nSentiment distribution:")
+    print(df["label"].value_counts().to_string())
+    print(f"\nCategory distribution:")
+    print(df["category"].value_counts().to_string())
+    print(f"\nDate range: {df['created_at'].min()} to {df['created_at'].max()}")
+    print(f"\nRun 'streamlit run src/dashboard/app.py' to view the dashboard")
