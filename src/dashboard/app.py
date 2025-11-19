@@ -110,12 +110,60 @@ st.markdown("""
         margin: 2rem 0;
         border-color: #e0e0e0;
     }
+
+    /* GitHub link in header */
+    .github-link {
+        position: absolute;
+        top: 1rem;
+        right: 1.5rem;
+        color: white;
+        text-decoration: none;
+        font-size: 1.5rem;
+        opacity: 0.9;
+        transition: all 0.3s ease;
+    }
+    .github-link:hover {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    .main-header {
+        position: relative;
+    }
+
+    /* Responsive filter section */
+    @media (max-width: 768px) {
+        [data-testid="stHorizontalBlock"] {
+            flex-wrap: wrap;
+        }
+        [data-testid="stHorizontalBlock"] > div {
+            min-width: 150px;
+            flex: 1 1 45%;
+        }
+    }
+
+    /* Prevent text truncation in selectbox and multiselect */
+    .stSelectbox label, .stMultiSelect label, .stTextInput label, .stRadio label {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+    }
+
+    /* Better label visibility */
+    .stSelectbox > label, .stMultiSelect > label, .stTextInput > label {
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # Header
 st.markdown("""
 <div class="main-header">
+    <a href="https://github.com/soup8732/aisentinel" target="_blank" class="github-link" title="View on GitHub">
+        <svg height="24" width="24" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+    </a>
     <h1>🤖 AISentinel</h1>
     <p>Real-time sentiment analysis of AI tools based on user feedback</p>
 </div>
@@ -176,59 +224,45 @@ TOOL_LINKS: Dict[str, str] = {
 @st.cache_data(show_spinner=False, ttl=3600)  # Cache for 1 hour, clear on restart
 def load_dataset() -> pd.DataFrame:
     """
-    Load sentiment analysis data from CSV or generate demo data.
+    Load sentiment analysis data from CSV file.
 
-    This function:
-    1. Checks if real data exists at data/processed/sentiment.csv
-    2. If yes: loads the CSV with actual sentiment results
-    3. If no: generates demo data for all tools in the taxonomy
+    This function loads data from data/processed/sentiment.csv which should
+    contain sentiment analysis results from the data collectors or the
+    sample data generator script.
 
-    The data includes:
-    - created_at: When the mention was collected (timezone-aware UTC)
+    Expected CSV columns:
+    - created_at: When the mention was collected (will be converted to UTC)
     - tool: Name of the AI tool mentioned
-    - category: Tool category (text_and_chat, coding_and_dev, etc.)
+    - category: Tool category (text, code, video_pic, audio)
     - score: Sentiment score from -1 (negative) to +1 (positive)
     - label: Sentiment label (positive/neutral/negative)
     - text: The actual user text/mention
 
     Returns:
         pd.DataFrame: Cleaned sentiment data ready for analysis
+
+    Raises:
+        FileNotFoundError: If no data file exists
     """
     processed = Path("data/processed/sentiment.csv")
-    if processed.exists():
-        df = pd.read_csv(processed)
-    else:
-        now = pd.Timestamp.utcnow().normalize()
-        rows = []
-        tools_map = tools_by_category()
-        for cat, names in tools_map.items():
-            for i, tool in enumerate(names):  # include all tools from taxonomy
-                for d in range(10):
-                    ts = now - pd.Timedelta(days=9 - d)
-                    score = ((hash(tool) + d) % 7 - 3) / 3.0
-                    rows.append({
-                        "created_at": ts,
-                        "tool": tool,
-                        "category": cat.value,
-                        "score": max(-1.0, min(1.0, score)),
-                        "label": "positive" if score > 0.2 else ("negative" if score < -0.2 else "neutral"),
-                        "text": f"User mention about {tool}",
-                    })
-        df = pd.DataFrame(rows)
+    if not processed.exists():
+        st.error("No data file found at data/processed/sentiment.csv")
+        st.info("Generate sample data by running: `python scripts/generate_sample_data.py`")
+        st.stop()
+
+    df = pd.read_csv(processed)
+
+    # Convert created_at to datetime
     if not pd.api.types.is_datetime64_any_dtype(df["created_at"]):
         df["created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
+
     # Ensure timezone-aware (UTC) for consistent date filtering
     if df["created_at"].dt.tz is None:
         df["created_at"] = df["created_at"].dt.tz_localize("UTC")
+    else:
+        df["created_at"] = df["created_at"].dt.tz_convert("UTC")
+
     return df.dropna(subset=["created_at", "tool", "category"]).copy()
-    # Normalize timezone: if timezone-aware, keep as UTC; if naive, make UTC-aware
-    df = df.dropna(subset=["created_at", "tool", "category"]).copy()
-    if not df.empty and "created_at" in df.columns:
-        if df["created_at"].dt.tz is not None:
-            df["created_at"] = df["created_at"].dt.tz_convert('UTC')
-        else:
-            df["created_at"] = df["created_at"].dt.tz_localize('UTC')
-    return df
 
 
 def score_to_010(x: float) -> int:
@@ -362,8 +396,8 @@ def search_and_filter(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> Tuple[p
 
     st.markdown("#### Filter Results")
 
-    # Main filters in a cleaner layout
-    c1, c2, c3, c4 = st.columns([3, 2, 2, 2])
+    # Main filters in a cleaner layout - equal columns for better responsiveness
+    c1, c2, c3, c4 = st.columns(4)
 
     with c1:
         query = st.text_input(

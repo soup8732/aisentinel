@@ -1,0 +1,12 @@
+# Render Blueprint - defines how to deploy the app
+# See: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: aisentinel
+    env: python
+    buildCommand: pip install -r requirements/base.txt
+    startCommand: streamlit run src/dashboard/app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
