@@ -175,6 +175,25 @@ TOOL_LINKS: Dict[str, str] = {
 
 @st.cache_data(show_spinner=False, ttl=3600)  # Cache for 1 hour, clear on restart
 def load_dataset() -> pd.DataFrame:
+    """
+    Load sentiment analysis data from CSV or generate demo data.
+
+    This function:
+    1. Checks if real data exists at data/processed/sentiment.csv
+    2. If yes: loads the CSV with actual sentiment results
+    3. If no: generates demo data for all tools in the taxonomy
+
+    The data includes:
+    - created_at: When the mention was collected (timezone-aware UTC)
+    - tool: Name of the AI tool mentioned
+    - category: Tool category (text_and_chat, coding_and_dev, etc.)
+    - score: Sentiment score from -1 (negative) to +1 (positive)
+    - label: Sentiment label (positive/neutral/negative)
+    - text: The actual user text/mention
+
+    Returns:
+        pd.DataFrame: Cleaned sentiment data ready for analysis
+    """
     processed = Path("data/processed/sentiment.csv")
     if processed.exists():
         df = pd.read_csv(processed)
@@ -205,6 +224,21 @@ def load_dataset() -> pd.DataFrame:
 
 
 def score_to_010(x: float) -> int:
+    """
+    Convert sentiment score from [-1, +1] range to [0, 10] scale.
+
+    Formula: score_010 = round((score + 1) * 5)
+    Examples:
+        -1.0 -> 0   (most negative)
+         0.0 -> 5   (neutral)
+        +1.0 -> 10  (most positive)
+
+    Args:
+        x: Sentiment score between -1 and +1
+
+    Returns:
+        int: Score on 0-10 scale for easy display
+    """
     x = max(-1.0, min(1.0, float(x)))
     return int(round((x + 1.0) * 5.0))
 
@@ -219,33 +253,86 @@ def sentiment_emoji(x: float) -> str:
 
 @st.cache_data(show_spinner=False, ttl=3600)  # Cache for 1 hour
 def build_ratings(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Aggregate raw sentiment data into tool ratings.
+
+    This function calculates three key scores for each AI tool:
+    1. Overall Score: Average sentiment (-1 to +1, displayed as 0-10)
+    2. Perception Score: Ratio of positive to negative mentions
+    3. Privacy Score: Inverse of privacy-related keyword frequency
+
+    Calculation Details:
+    - Positive mention: score > 0.2
+    - Negative mention: score < -0.2
+    - Privacy keywords: privacy, security, data, breach, leak, unsafe
+
+    Args:
+        df: Raw sentiment DataFrame with columns: tool, category, score, text
+
+    Returns:
+        pd.DataFrame: Aggregated ratings with columns:
+            - tool, category, type_label
+            - overall_10, perception_10, privacy_10 (0-10 scales)
+            - n (total mentions), pos (positive count), neg (negative count)
+            - mood (emoji indicator)
+    """
     temp = df.copy()
+    # Flag positive mentions (score > 0.2)
     temp["is_pos"] = (temp["score"] > 0.2).astype(int)
+    # Flag negative mentions (score < -0.2)
     temp["is_neg"] = (temp["score"] < -0.2).astype(int)
 
+    # Flag mentions containing privacy-related keywords
     priv_kw = ["privacy", "security", "data", "breach", "leak", "unsafe"]
     temp["privacy_flag"] = temp["text"].astype(str).str.lower().apply(lambda t: any(k in t for k in priv_kw)).astype(int)
 
+    # Aggregate by tool and category
     agg = temp.groupby(["tool", "category"], as_index=False).agg(
-        overall=("score", "mean"),
-        n=("score", "count"),
-        pos=("is_pos", "sum"),
-        neg=("is_neg", "sum"),
-        privacy=("privacy_flag", "mean"),
+        overall=("score", "mean"),       # Average sentiment score
+        n=("score", "count"),            # Total mentions
+        pos=("is_pos", "sum"),           # Positive mention count
+        neg=("is_neg", "sum"),           # Negative mention count
+        privacy=("privacy_flag", "mean"), # Privacy keyword frequency
     )
+
+    # Calculate perception: (positive - negative) / total mentions
     agg["perception"] = (agg["pos"] - agg["neg"]) / agg["n"].clip(lower=1)
+    # Privacy score: higher is better (fewer privacy concerns)
     agg["privacy_score"] = 1.0 - agg["privacy"].clip(0, 1)
 
+    # Convert to 0-10 scales for display
     agg["overall_10"] = agg["overall"].apply(score_to_010)
     agg["perception_10"] = agg["perception"].apply(score_to_010)
     agg["privacy_10"] = (agg["privacy_score"] * 10).round().astype(int)
     agg["mood"] = agg["overall"].apply(sentiment_emoji)
-    # Friendly type label
+    # Friendly type label (e.g., "text_and_chat" -> "Text & Chat")
     agg["type_label"] = agg["category"].apply(lambda v: FRIENDLY_LABEL.get(str(v), str(v).replace('_', ' ').title()))
     return agg
 
 
 def search_and_filter(df_ratings: pd.DataFrame, df_raw: pd.DataFrame) -> Tuple[pd.DataFrame, int, str, Optional[Tuple[datetime, datetime]]]:
+    """
+    Render search and filter controls, return filtered results.
+
+    This function creates the sidebar controls for:
+    1. Quick Jump: Autocomplete dropdown to navigate to any tool
+    2. Text Search: Filter tools by name
+    3. Category Filter: Multi-select for tool categories
+    4. Top N: How many tools to display
+    5. View Mode: Table or Card layout
+    6. Date Range: Filter data by time period
+
+    Args:
+        df_ratings: Aggregated tool ratings DataFrame
+        df_raw: Raw sentiment data DataFrame
+
+    Returns:
+        Tuple containing:
+            - Filtered ratings DataFrame
+            - Top N value (5, 10, 20, or 50)
+            - View mode ("Table" or "Cards")
+            - Date range tuple (start, end) or None
+    """
     # Filters section with better organization
     st.markdown("### 🔍 Search & Filters")
 
@@ -407,11 +494,31 @@ def sidebar_tools(df: pd.DataFrame) -> None:
 
 
 def get_trend_indicator(tool: str, df_raw: pd.DataFrame) -> str:
-    """Get a simple trend indicator for a tool."""
+    """
+    Calculate sentiment trend for a tool (improving, declining, or stable).
+
+    Compares average sentiment of recent mentions vs older mentions:
+    - Splits data in half chronologically
+    - Calculates average score for each half
+    - Returns emoji indicator based on the difference
+
+    Thresholds:
+        - diff > 0.1: Improving (📈 ↗)
+        - diff < -0.1: Declining (📉 ↘)
+        - otherwise: Stable (➡ →)
+
+    Args:
+        tool: Name of the AI tool
+        df_raw: Raw sentiment DataFrame
+
+    Returns:
+        str: Emoji indicator (📈 ↗, 📉 ↘, or ➡ →)
+    """
     tool_data = df_raw[df_raw["tool"] == tool].copy()
     if tool_data.empty or len(tool_data) < 2 or "created_at" not in tool_data.columns:
         return "—"
 
+    # Sort chronologically and split in half
     tool_data = tool_data.sort_values("created_at")
     recent_half = tool_data.tail(len(tool_data) // 2)
     older_half = tool_data.head(len(tool_data) // 2)
@@ -419,17 +526,19 @@ def get_trend_indicator(tool: str, df_raw: pd.DataFrame) -> str:
     if older_half.empty or recent_half.empty:
         return "—"
 
+    # Compare average sentiment of recent vs older mentions
     recent_avg = recent_half["score"].mean()
     older_avg = older_half["score"].mean()
 
     diff = recent_avg - older_avg
 
+    # Return appropriate trend indicator
     if diff > 0.1:
-        return "📈 ↗"
+        return "📈 ↗"  # Improving
     elif diff < -0.1:
-        return "📉 ↘"
+        return "📉 ↘"  # Declining
     else:
-        return "➡ →"
+        return "➡ →"   # Stable
 
 
 def rankings_table(df: pd.DataFrame, top_n: int, df_raw: Optional[pd.DataFrame] = None) -> None:

@@ -1,3 +1,33 @@
+"""
+Hacker News data collector for AI tool sentiment analysis.
+
+This module collects posts and comments from Hacker News that mention AI tools.
+It uses the Algolia HN Search API which requires NO authentication.
+
+This is the easiest collector to use - no API keys needed!
+
+Features:
+    - Searches for AI tool mentions in HN posts and comments
+    - Automatically infers tool name and category from text
+    - Returns normalized data ready for sentiment analysis
+
+Usage:
+    from src.data_collection.hackernews_collector import HackerNewsCollector
+
+    # Collect latest mentions
+    collector = HackerNewsCollector(limit=100)
+    items = list(collector.collect())
+
+    # Save to CSV for sentiment analysis
+    import pandas as pd
+    df = pd.DataFrame([item.as_dict() for item in items])
+    df.to_csv("data/raw/hackernews_data.csv", index=False)
+
+    # Run sentiment analysis on collected data
+    from src.sentiment_analysis.analyzer import AdvancedSentimentAnalyzer
+    analyzer = AdvancedSentimentAnalyzer()
+    results = analyzer.batch_analyze([item.text for item in items])
+"""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -10,6 +40,7 @@ from . import DataCollector
 from src.utils.taxonomy import Category, tools_by_category
 
 
+# Algolia HN Search API endpoints (no auth required)
 ALGOLIA_SEARCH_URL = "https://hn.algolia.com/api/v1/search"
 ALGOLIA_SEARCH_BY_DATE_URL = "https://hn.algolia.com/api/v1/search_by_date"
 
