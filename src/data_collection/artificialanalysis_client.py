@@ -38,6 +38,7 @@ Usage:
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional
 import os
 import requests
@@ -83,17 +84,38 @@ class ArtificialAnalysisClient:
     def __init__(self, timeout: int = 30) -> None:
         """Initialize the client with API credentials from config.
 
+        Supports multiple methods for loading API key:
+        1. Environment variable: AA_API_KEY
+        2. Render secret file: /etc/secrets/AA_API_KEY
+        3. Config system: via load_config()
+
         Args:
             timeout: Request timeout in seconds.
         """
         self.cfg = load_config()
         self.timeout = timeout
-        # Try config first, then fallback to direct environment variable
-        # This helps with cloud deployments where env vars might not be loaded via dotenv
-        self.api_key = (
-            self.cfg.apis.artificialanalysis_api_key 
-            or os.environ.get("AA_API_KEY")
-        )
+        
+        # Try multiple methods to get API key (for different deployment scenarios)
+        api_key = None
+        
+        # Method 1: From config system (reads from os.environ)
+        if self.cfg.apis.artificialanalysis_api_key:
+            api_key = self.cfg.apis.artificialanalysis_api_key
+        
+        # Method 2: Direct environment variable (for cloud deployments)
+        if not api_key:
+            api_key = os.environ.get("AA_API_KEY")
+        
+        # Method 3: Render secret file (if using Render secret files)
+        if not api_key:
+            secret_file = Path("/etc/secrets/AA_API_KEY")
+            if secret_file.exists():
+                try:
+                    api_key = secret_file.read_text().strip()
+                except Exception:
+                    pass  # Silently fail if can't read file
+        
+        self.api_key = api_key
         self.session = self._create_session()
 
     def _create_session(self) -> requests.Session:
