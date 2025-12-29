@@ -39,6 +39,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Dict, List, Mapping, Optional
+import os
 import requests
 from requests.adapters import HTTPAdapter
 
@@ -87,7 +88,12 @@ class ArtificialAnalysisClient:
         """
         self.cfg = load_config()
         self.timeout = timeout
-        self.api_key = self.cfg.apis.artificialanalysis_api_key
+        # Try config first, then fallback to direct environment variable
+        # This helps with cloud deployments where env vars might not be loaded via dotenv
+        self.api_key = (
+            self.cfg.apis.artificialanalysis_api_key 
+            or os.environ.get("AA_API_KEY")
+        )
         self.session = self._create_session()
 
     def _create_session(self) -> requests.Session:

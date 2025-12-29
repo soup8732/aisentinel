@@ -822,7 +822,18 @@ def show_tool_details_modal(tool_name: str, row: pd.Series, df_raw: pd.DataFrame
         except ValueError as e:
             # API key not configured
             st.warning("⚠️ **API Key Not Configured**")
-            st.info(f"To view technical metrics, add your `AA_API_KEY` to the `.env` file. Visit https://artificialanalysis.ai/ to get an API key.")
+            st.info(f"To view technical metrics, add your `AA_API_KEY` environment variable. Visit https://artificialanalysis.ai/ to get an API key.")
+            
+            # Debug info (only show in development)
+            if os.environ.get("ENVIRONMENT", "development") == "development":
+                with st.expander("🔍 Debug Information", expanded=False):
+                    st.code(f"""
+Environment check:
+- AA_API_KEY in os.environ: {'AA_API_KEY' in os.environ}
+- AA_API_KEY value: {'Set' if os.environ.get('AA_API_KEY') else 'Not set'}
+- Error: {str(e)}
+                    """)
+            
             st.caption(str(e))
         
         except Exception as e:
