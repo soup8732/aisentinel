@@ -822,17 +822,42 @@ def show_tool_details_modal(tool_name: str, row: pd.Series, df_raw: pd.DataFrame
         except ValueError as e:
             # API key not configured
             st.warning("⚠️ **API Key Not Configured**")
-            st.info(f"To view technical metrics, add your `AA_API_KEY` environment variable. Visit https://artificialanalysis.ai/ to get an API key.")
+            st.info(f"To view technical metrics, add your `AA_API_KEY` as an environment variable or secret file in Render. Visit https://artificialanalysis.ai/ to get an API key.")
             
-            # Debug info (only show in development)
-            if os.environ.get("ENVIRONMENT", "development") == "development":
-                with st.expander("🔍 Debug Information", expanded=False):
-                    st.code(f"""
-Environment check:
-- AA_API_KEY in os.environ: {'AA_API_KEY' in os.environ}
-- AA_API_KEY value: {'Set' if os.environ.get('AA_API_KEY') else 'Not set'}
-- Error: {str(e)}
-                    """)
+            # Debug info to help diagnose the issue
+            with st.expander("🔍 Debug Information", expanded=False):
+                from pathlib import Path
+                
+                env_check = 'AA_API_KEY' in os.environ
+                env_value = os.environ.get('AA_API_KEY')
+                secret_file = Path("/etc/secrets/AA_API_KEY")
+                secret_exists = secret_file.exists()
+                secret_content = None
+                
+                if secret_exists:
+                    try:
+                        secret_content = secret_file.read_text().strip()
+                        secret_readable = "Yes" if secret_content else "Empty file"
+                    except Exception as ex:
+                        secret_readable = f"Error reading: {str(ex)}"
+                else:
+                    secret_readable = "File does not exist"
+                
+                st.code(f"""
+Environment Variable Check:
+- AA_API_KEY in os.environ: {env_check}
+- AA_API_KEY value: {'Set (length: ' + str(len(env_value)) + ')' if env_value else 'Not set'}
+
+Render Secret File Check:
+- /etc/secrets/AA_API_KEY exists: {secret_exists}
+- Secret file readable: {secret_readable}
+- Secret file content length: {len(secret_content) if secret_content else 0}
+
+All Environment Variables (AA_*):
+{chr(10).join([f"- {k}: {'Set' if os.environ.get(k) else 'Not set'}" for k in os.environ.keys() if k.startswith('AA_')]) or '- No AA_* variables found'}
+
+Error: {str(e)}
+                """)
             
             st.caption(str(e))
         
