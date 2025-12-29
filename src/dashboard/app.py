@@ -21,6 +21,7 @@ os.environ.setdefault("MPLCONFIGDIR", str((PROJECT_ROOT / ".mplconfig").resolve(
 (Path(os.environ["MPLCONFIGDIR"]).resolve()).mkdir(parents=True, exist_ok=True)
 
 from src.utils.taxonomy import Category, tools_by_category
+from src.data_collection.artificialanalysis_client import ArtificialAnalysisClient, ModelInfo
 
 st.set_page_config(
     page_title="AISentinel - AI Tools Reviews",
@@ -218,6 +219,30 @@ TOOL_LINKS: Dict[str, str] = {
     "Bolt": "https://bolt.new/",
     "Loveable": "https://www.lovable.dev/",
     "Humain": "https://humane.com/",
+}
+
+# Mapping from tool names to ArtificialAnalysis company/creator names
+TOOL_TO_COMPANY: Dict[str, str] = {
+    "ChatGPT": "OpenAI",
+    "DALL-E": "OpenAI",
+    "Claude": "Anthropic",
+    "Gemini": "Google",
+    "DeepSeek": "DeepSeek",
+    "Mistral": "Mistral AI",
+    "GitHub Copilot": "GitHub",
+    "CodeWhisperer": "Amazon",
+    "Amazon Q Developer": "Amazon",
+    "Stability AI": "Stability AI",
+    "Midjourney": "Midjourney",
+    "RunwayML": "Runway",
+    "Adobe Firefly": "Adobe",
+    "Whisper": "OpenAI",
+    "ElevenLabs": "ElevenLabs",
+    "Tabnine": "Tabnine",
+    "Cursor": "Cursor",
+    "Codeium": "Codeium",
+    "Replit Ghostwriter": "Replit",
+    "JetBrains AI Assistant": "JetBrains",
 }
 
 
@@ -631,7 +656,7 @@ def rankings_table(df: pd.DataFrame, top_n: int, df_raw: Optional[pd.DataFrame] 
 
 @st.dialog("Tool Details")
 def show_tool_details_modal(tool_name: str, row: pd.Series, df_raw: pd.DataFrame):
-    """Display tool details in a modal dialog."""
+    """Display tool details in a modal dialog with model selection and technical metrics."""
     icon = CATEGORY_ICON.get(str(row["category"]), "✨")
 
     st.markdown(f"# {icon} {tool_name}")
@@ -643,7 +668,8 @@ def show_tool_details_modal(tool_name: str, row: pd.Series, df_raw: pd.DataFrame
 
     st.markdown("---")
 
-    # Metrics with color coding
+    # SENTIMENT METRICS SECTION
+    st.markdown("### 💭 User Sentiment Analysis")
     overall_score = int(row["overall_10"])
     perception_score = int(row["perception_10"])
     privacy_score = int(row["privacy_10"])
@@ -656,19 +682,16 @@ def show_tool_details_modal(tool_name: str, row: pd.Series, df_raw: pd.DataFrame
         else:
             return "#ef4444"
 
-    # Big score display
+    # Sentiment scores display
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown(f"<div style='text-align:center; padding:20px; background:#f8f9fa; border-radius:10px;'><div style='font-size:3em; font-weight:bold; color:{get_score_color(overall_score)};'>{overall_score}</div><div style='font-size:1em; color:#666; margin-top:10px;'>Overall Score</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align:center; padding:15px; background:#f8f9fa; border-radius:10px;'><div style='font-size:2.5em; font-weight:bold; color:{get_score_color(overall_score)};'>{overall_score}</div><div style='font-size:0.9em; color:#666; margin-top:8px;'>Overall Sentiment</div></div>", unsafe_allow_html=True)
     with col2:
-        st.markdown(f"<div style='text-align:center; padding:20px; background:#f8f9fa; border-radius:10px;'><div style='font-size:3em; font-weight:bold; color:{get_score_color(perception_score)};'>{perception_score}</div><div style='font-size:1em; color:#666; margin-top:10px;'>User Perception</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align:center; padding:15px; background:#f8f9fa; border-radius:10px;'><div style='font-size:2.5em; font-weight:bold; color:{get_score_color(perception_score)};'>{perception_score}</div><div style='font-size:0.9em; color:#666; margin-top:8px;'>User Perception</div></div>", unsafe_allow_html=True)
     with col3:
-        st.markdown(f"<div style='text-align:center; padding:20px; background:#f8f9fa; border-radius:10px;'><div style='font-size:3em; font-weight:bold; color:{get_score_color(privacy_score)};'>{privacy_score}</div><div style='font-size:1em; color:#666; margin-top:10px;'>Privacy & Security</div></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align:center; padding:15px; background:#f8f9fa; border-radius:10px;'><div style='font-size:2.5em; font-weight:bold; color:{get_score_color(privacy_score)};'>{privacy_score}</div><div style='font-size:0.9em; color:#666; margin-top:8px;'>Privacy & Security</div></div>", unsafe_allow_html=True)
 
-    st.markdown("")
-
-    # Stats
-    st.markdown("### 📊 Performance Metrics")
+    # Sentiment stats
     col_a, col_b = st.columns(2)
     with col_a:
         st.metric("Total Mentions", f"{int(row['n']):,}")
@@ -676,6 +699,142 @@ def show_tool_details_modal(tool_name: str, row: pd.Series, df_raw: pd.DataFrame
     with col_b:
         st.metric("Category Rank", "Top 10%", help="Estimated ranking within category")
         st.metric("Negative Reviews", f"{int(row['neg']):,}")
+
+    st.markdown("---")
+
+    # TECHNICAL METRICS SECTION (from ArtificialAnalysis API)
+    st.markdown("### 🔬 Technical Metrics & Model Information")
+    
+    # Get company name for API lookup
+    company_name = TOOL_TO_COMPANY.get(tool_name)
+    
+    if company_name:
+        try:
+            # Initialize API client
+            api_client = ArtificialAnalysisClient()
+            
+            # Fetch models from this company
+            with st.spinner(f"Loading models from {company_name}..."):
+                company_models = api_client.get_models_by_creator(company_name)
+            
+            if company_models:
+                # Model selection dropdown
+                model_options = {f"{m.name} ({m.slug or m.id[:8]})": m for m in company_models}
+                model_names = list(model_options.keys())
+                
+                if model_names:
+                    selected_model_key = st.selectbox(
+                        f"Select a specific model from {company_name}",
+                        model_names,
+                        key=f"model_select_{tool_name}",
+                        help="Choose a specific model to view detailed technical metrics"
+                    )
+                    
+                    selected_model: ModelInfo = model_options[selected_model_key]
+                    
+                    # Display technical metrics
+                    st.markdown(f"#### 📊 {selected_model.name} Technical Specifications")
+                    
+                    # Two-column layout for metrics
+                    tech_col1, tech_col2 = st.columns(2)
+                    
+                    with tech_col1:
+                        # Evaluations/Benchmarks
+                        if selected_model.evaluations:
+                            st.markdown("**📈 Evaluation Scores**")
+                            eval_data = selected_model.evaluations
+                            
+                            # Display key metrics
+                            key_metrics = [
+                                ("artificial_analysis_intelligence_index", "Intelligence Index"),
+                                ("artificial_analysis_coding_index", "Coding Index"),
+                                ("artificial_analysis_math_index", "Math Index"),
+                                ("mmlu_pro", "MMLU Pro"),
+                                ("gpqa", "GPQA"),
+                                ("math_500", "Math 500"),
+                            ]
+                            
+                            for key, label in key_metrics:
+                                if key in eval_data:
+                                    value = eval_data[key]
+                                    if isinstance(value, (int, float)):
+                                        if key.endswith("_index"):
+                                            # Index scores (0-100 scale typically)
+                                            st.metric(label, f"{value:.1f}", help=f"{key}")
+                                        else:
+                                            # Ratio scores (0-1 scale)
+                                            st.metric(label, f"{value:.3f}", help=f"{key}")
+                    
+                    with tech_col2:
+                        # Pricing information
+                        if selected_model.pricing:
+                            st.markdown("**💰 Pricing**")
+                            pricing = selected_model.pricing
+                            
+                            if "price_1m_input_tokens" in pricing:
+                                st.metric(
+                                    "Input Tokens",
+                                    f"${pricing['price_1m_input_tokens']:.2f}/1M",
+                                    help="Price per million input tokens"
+                                )
+                            if "price_1m_output_tokens" in pricing:
+                                st.metric(
+                                    "Output Tokens",
+                                    f"${pricing['price_1m_output_tokens']:.2f}/1M",
+                                    help="Price per million output tokens"
+                                )
+                            if "price_1m_blended_3_to_1" in pricing:
+                                st.metric(
+                                    "Blended (3:1)",
+                                    f"${pricing['price_1m_blended_3_to_1']:.2f}/1M",
+                                    help="Blended pricing (3 input : 1 output ratio)"
+                                )
+                        
+                        # Performance metrics
+                        if selected_model.median_output_tokens_per_second is not None:
+                            st.markdown("**⚡ Performance**")
+                            st.metric(
+                                "Output Speed",
+                                f"{selected_model.median_output_tokens_per_second:.1f} tokens/sec",
+                                help="Median output generation speed"
+                            )
+                            if selected_model.median_time_to_first_token_seconds is not None:
+                                st.metric(
+                                    "Time to First Token",
+                                    f"{selected_model.median_time_to_first_token_seconds:.2f}s",
+                                    help="Median time to first token"
+                                )
+                    
+                    # Additional evaluation metrics in expander
+                    if selected_model.evaluations and len(selected_model.evaluations) > 6:
+                        with st.expander("📋 All Evaluation Metrics"):
+                            eval_df = pd.DataFrame([
+                                {"Metric": k.replace("_", " ").title(), "Score": v}
+                                for k, v in selected_model.evaluations.items()
+                            ])
+                            st.dataframe(eval_df, use_container_width=True, hide_index=True)
+                
+                else:
+                    st.info(f"Found models from {company_name}, but no models available to display.")
+            else:
+                st.info(f"No models found for {company_name} in ArtificialAnalysis database. The company may use different naming or may not be tracked yet.")
+        
+        except ValueError as e:
+            # API key not configured
+            st.warning("⚠️ **API Key Not Configured**")
+            st.info(f"To view technical metrics, add your `AA_API_KEY` to the `.env` file. Visit https://artificialanalysis.ai/ to get an API key.")
+            st.caption(str(e))
+        
+        except Exception as e:
+            # Other API errors
+            st.warning("⚠️ **Unable to Load Technical Metrics**")
+            st.info(f"Error connecting to ArtificialAnalysis API: {str(e)}")
+            st.caption("Technical metrics are optional and won't affect sentiment analysis.")
+    else:
+        st.info(f"💡 **Model Information Available**")
+        st.caption(f"To view technical metrics for {tool_name}, we need to map it to a company name in the ArtificialAnalysis database. This feature is being expanded.")
+
+    st.markdown("---")
 
     # External link
     url = TOOL_LINKS.get(tool_name)

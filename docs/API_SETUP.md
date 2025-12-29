@@ -63,6 +63,7 @@ python scripts/test_model.py
 | **Hacker News** | ❌ No API | FREE | Public Algolia API, no auth |
 | **Twitter/X** | API Key | FREE (limited) | Real-time tweets |
 | **Reddit** | API Key | FREE | Subreddit discussions |
+| **ArtificialAnalysis** | API Key | Varies | Technical model info & benchmarks |
 | OpenAI | ❌ Optional | Paid | Advanced features |
 | HuggingFace | ❌ Optional | FREE | Public model access |
 
@@ -225,7 +226,77 @@ Not currently used in the base pipeline, but useful for:
 
 ---
 
-### 5. Optional: HuggingFace Token
+### 5. ArtificialAnalysis.ai API
+
+**Cost**: Varies (check website for pricing)
+**Required**: No, optional for technical model information
+
+Provides comprehensive technical information, benchmarks, and evaluations for AI models and tools.
+
+#### Setup Steps:
+
+1. **Get API Key**
+   - Visit: https://artificialanalysis.ai/
+   - Sign up for an account
+   - Navigate to API section to obtain your API key
+
+2. **Add to .env**
+   ```bash
+   AA_API_KEY=your_api_key_here
+   ```
+
+#### Usage:
+
+```python
+from src.data_collection.artificialanalysis_client import ArtificialAnalysisClient
+
+# Initialize client
+client = ArtificialAnalysisClient()
+
+# Get all LLM models
+models = client.get_models()
+
+# Get specific model details (by ID, slug, or name)
+model_info = client.get_model_details("o3-mini")
+
+# Get evaluation scores
+evaluations = client.get_model_evaluations("o3-mini")
+
+# Search for models
+results = client.search_models("gpt")
+
+# Get models by creator
+openai_models = client.get_models_by_creator("OpenAI")
+
+# Media endpoints
+image_models = client.get_text_to_image_models(include_categories=True)
+video_models = client.get_text_to_video_models()
+speech_models = client.get_text_to_speech_models()
+```
+
+#### Test Your Setup:
+
+```bash
+python scripts/test_artificialanalysis.py
+```
+
+**What you get**:
+- Technical specifications for AI models (LLMs)
+- Evaluation scores and benchmark results
+- Pricing information (per million tokens)
+- Performance metrics (tokens/second, time to first token)
+- Creator/provider information
+- Media model rankings (text-to-image, text-to-video, etc.) with ELO ratings
+
+**API Details**:
+- Rate limit: 1,000 requests per day (free tier)
+- Endpoints: LLMs, Text-to-Image, Image Editing, Text-to-Speech, Text-to-Video, Image-to-Video
+- Response format: JSON with `status` and `data` fields
+- Documentation: https://artificialanalysis.ai/documentation#free-api
+
+---
+
+### 6. Optional: HuggingFace Token
 
 **Cost**: FREE
 **Required**: No, public datasets work without auth
@@ -510,8 +581,9 @@ cp .env.example .env
 from src.utils.config import load_config
 
 cfg = load_config()
-print(f"Twitter token: {cfg.apis.twitter_bearer_token[:10]}...")
+print(f"Twitter token: {cfg.apis.twitter_bearer_token[:10] if cfg.apis.twitter_bearer_token else 'Not set'}...")
 print(f"Reddit ID: {cfg.apis.reddit_client_id}")
+print(f"ArtificialAnalysis API key: {'Set' if cfg.apis.artificialanalysis_api_key else 'Not set'}")
 ```
 
 ### "HuggingFace datasets won't download"

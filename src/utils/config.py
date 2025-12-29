@@ -39,6 +39,7 @@ class APISettings:
         reddit_client_id: Reddit application client id.
         reddit_client_secret: Reddit application client secret.
         reddit_user_agent: User agent for Reddit API requests.
+        artificialanalysis_api_key: API key for ArtificialAnalysis.ai.
     """
 
     openai_api_key: Optional[str]
@@ -47,6 +48,7 @@ class APISettings:
     reddit_client_id: Optional[str]
     reddit_client_secret: Optional[str]
     reddit_user_agent: Optional[str]
+    artificialanalysis_api_key: Optional[str]
 
 
 @dataclass(frozen=True)
@@ -127,6 +129,7 @@ def load_config(env_file: Optional[Path] = None) -> AppConfig:
         reddit_client_id=_get_env(os.environ, "REDDIT_CLIENT_ID"),
         reddit_client_secret=_get_env(os.environ, "REDDIT_CLIENT_SECRET"),
         reddit_user_agent=_get_env(os.environ, "REDDIT_USER_AGENT", default="aisentinel/0.1.0"),
+        artificialanalysis_api_key=_get_env(os.environ, "AA_API_KEY"),
     )
 
     return AppConfig(environment=environment, paths=paths, apis=apis)
