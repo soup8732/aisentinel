@@ -250,15 +250,18 @@ st.markdown("""
        ============================================ */
     
     /* Card styling - target the column's vertical block which contains the card container */
-    /* Primary target: cards inside columns */
-    [data-testid="column"] > div[data-testid="stVerticalBlock"] {
-        background: #ffffff !important;
+    /* Primary target: cards inside columns - use more specific selectors */
+    [data-testid="column"] > div[data-testid="stVerticalBlock"],
+    [data-testid="column"] > [data-testid="stVerticalBlock"],
+    div[data-testid="column"] > div[data-testid="stVerticalBlock"],
+    [data-testid="column"] > div[data-testid="stVerticalBlock"] > div[data-testid="stVerticalBlock"] {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
         border-radius: 16px !important;
-        padding: 20px !important;
-        border: 1px solid rgba(0, 212, 255, 0.2) !important;
-        box-shadow: 0 4px 20px rgba(0, 212, 255, 0.15), 0 1px 4px rgba(139, 92, 246, 0.1) !important;
+        padding: 16px !important;
+        border: 2px solid rgba(0, 212, 255, 0.4) !important;
+        box-shadow: 0 6px 24px rgba(0, 212, 255, 0.2), 0 2px 8px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        margin-bottom: 20px !important;
+        margin-bottom: 16px !important;
         position: relative !important;
         overflow: visible !important;
     }
@@ -278,21 +281,21 @@ st.markdown("""
     
     /* Card hover effect */
     [data-testid="column"] > div[data-testid="stVerticalBlock"]:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 28px rgba(0, 212, 255, 0.25), 0 2px 8px rgba(139, 92, 246, 0.15) !important;
-        background: #ffffff !important;
-        border-color: rgba(0, 212, 255, 0.4) !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 32px rgba(0, 212, 255, 0.3), 0 4px 12px rgba(139, 92, 246, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+        border-color: rgba(0, 212, 255, 0.6) !important;
     }
     
     /* Fallback: target nested vertical blocks */
     [data-testid="column"] > [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlock"] {
-        background: #ffffff !important;
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%) !important;
         border-radius: 16px !important;
-        padding: 20px !important;
-        border: 1px solid rgba(0, 212, 255, 0.2) !important;
-        box-shadow: 0 4px 20px rgba(0, 212, 255, 0.15), 0 1px 4px rgba(139, 92, 246, 0.1) !important;
+        padding: 16px !important;
+        border: 2px solid rgba(0, 212, 255, 0.4) !important;
+        box-shadow: 0 6px 24px rgba(0, 212, 255, 0.2), 0 2px 8px rgba(139, 92, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        margin-bottom: 20px !important;
+        margin-bottom: 16px !important;
         position: relative !important;
         overflow: visible !important;
     }
@@ -309,11 +312,44 @@ st.markdown("""
         z-index: 1 !important;
     }
     
-    [data-testid="column"] > [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlock"]:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 28px rgba(0, 212, 255, 0.25), 0 2px 8px rgba(139, 92, 246, 0.15) !important;
-        background: #ffffff !important;
-        border-color: rgba(0, 212, 255, 0.4) !important;
+    [data-testid="column"] > [data-testid="stVerticalBlock"] > [data-testid="stVerticalBlock"]:hover,
+    div[data-testid="column"] > div[data-testid="stVerticalBlock"]:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 32px rgba(0, 212, 255, 0.3), 0 4px 12px rgba(139, 92, 246, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%) !important;
+        border-color: rgba(0, 212, 255, 0.6) !important;
+    }
+    
+    /* Ensure logo images are visible */
+    [data-testid="column"] img[id^="logo-"],
+    [data-testid="column"] div[id^="logo-"],
+    [data-testid="column"] img,
+    [data-testid="column"] .logo-fallback {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Logo container styling */
+    [data-testid="column"] div[id^="logo-"] {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Ensure logo images load properly */
+    [data-testid="column"] img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* Reduce spacing in card containers */
+    [data-testid="column"] > div[data-testid="stVerticalBlock"] > [data-testid="stHorizontalBlock"],
+    [data-testid="column"] > [data-testid="stVerticalBlock"] > [data-testid="stHorizontalBlock"] {
+        margin-bottom: 8px !important;
+    }
+    
+    [data-testid="column"] > div[data-testid="stVerticalBlock"] > [data-testid="stHorizontalBlock"]:last-child {
+        margin-bottom: 0 !important;
     }
     
     /* Text styling in cards */
@@ -1902,30 +1938,23 @@ def render_tool_card(row: pd.Series, key_scope: str, idx: int, df_raw: Optional[
     # Get website URL
     url = TOOL_LINKS.get(tool_name)
     
-    # Card container - simplified structure
+    # Card container - simplified structure with reduced spacing
     with st.container():
         # Header: Logo and name side-by-side (horizontal)
         header_col1, header_col2 = st.columns([1, 2.5], gap="small")
         
         with header_col1:
-            # Logo - smaller size for horizontal layout
+            # Logo - render directly without extra wrapper
             st.markdown(logo_html, unsafe_allow_html=True)
         
         with header_col2:
             st.markdown(f"""
-            <div style="display: flex; align-items: center; height: 100%; margin-bottom: 12px;">
-                <h3 style="
-                    margin: 0;
-                    padding: 0;
-                    font-size: 1.3rem;
-                    font-weight: 700;
-                    color: #0f172a;
-                    line-height: 1.2;
-                ">{tool_name}</h3>
+            <div style="display: flex; align-items: center; height: 100%; margin: 0; padding: 0;">
+                <h3 style="margin: 0; padding: 0; font-size: 1.2rem; font-weight: 700; color: #0f172a; line-height: 1.2;">{tool_name}</h3>
             </div>
             """, unsafe_allow_html=True)
         
-        # Three scores in a single row
+        # Three scores in a single row - reduced spacing
         score_col1, score_col2, score_col3 = st.columns(3, gap="small")
         
         with score_col1:
@@ -1933,13 +1962,13 @@ def render_tool_card(row: pd.Series, key_scope: str, idx: int, df_raw: Optional[
             <div style="
                 text-align: center;
                 background: {get_score_gradient(overall_score)};
-                padding: 14px 8px;
+                padding: 12px 6px;
                 border-radius: 12px;
                 box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-                margin-bottom: 12px;
+                margin-bottom: 8px;
             ">
                 <div style="
-                    font-size: 1.8rem;
+                    font-size: 1.6rem;
                     font-weight: 800;
                     color: white;
                     line-height: 1;
@@ -1962,13 +1991,13 @@ def render_tool_card(row: pd.Series, key_scope: str, idx: int, df_raw: Optional[
             <div style="
                 text-align: center;
                 background: {get_score_gradient(perception_score)};
-                padding: 14px 8px;
+                padding: 12px 6px;
                 border-radius: 12px;
                 box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-                margin-bottom: 12px;
+                margin-bottom: 8px;
             ">
                 <div style="
-                    font-size: 1.8rem;
+                    font-size: 1.6rem;
                     font-weight: 800;
                     color: white;
                     line-height: 1;
@@ -1991,13 +2020,13 @@ def render_tool_card(row: pd.Series, key_scope: str, idx: int, df_raw: Optional[
             <div style="
                 text-align: center;
                 background: {get_score_gradient(privacy_score)};
-                padding: 14px 8px;
+                padding: 12px 6px;
                 border-radius: 12px;
                 box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
-                margin-bottom: 12px;
+                margin-bottom: 8px;
             ">
                 <div style="
-                    font-size: 1.8rem;
+                    font-size: 1.6rem;
                     font-weight: 800;
                     color: white;
                     line-height: 1;
